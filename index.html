@@ -84636,24 +84636,21 @@ class WebGLRenderer {
 Object.assign(window.THREE, { ACESFilmicToneMapping, AddEquation, AddOperation, AdditiveBlending, AgXToneMapping, AlphaFormat, AlwaysCompare, AlwaysDepth, ArrayCamera, BackSide, BoxGeometry, BufferAttribute, BufferGeometry, ByteType, CineonToneMapping, ClampToEdgeWrapping, Color, ColorManagement, ConstantAlphaFactor, ConstantColorFactor, CubeCamera, CubeDepthTexture, CubeReflectionMapping, CubeRefractionMapping, CubeTexture, CubeUVReflectionMapping, CullFaceBack, CullFaceFront, CullFaceNone, CustomBlending, CustomToneMapping, Data3DTexture, DataArrayTexture, DataTexture, DepthFormat, DepthStencilFormat, DepthTexture, DoubleSide, DstAlphaFactor, DstColorFactor, EqualCompare, EqualDepth, EquirectangularReflectionMapping, EquirectangularRefractionMapping, EventDispatcher, ExternalTexture, Float32BufferAttribute, FloatType, FrontSide, Frustum, GLSL3, GreaterCompare, GreaterDepth, GreaterEqualCompare, GreaterEqualDepth, HalfFloatType, IntType, Layers, LessCompare, LessDepth, LessEqualCompare, LessEqualDepth, LinearFilter, LinearMipmapLinearFilter, LinearMipmapNearestFilter, LinearSRGBColorSpace, LinearToneMapping, LinearTransfer, Matrix3, Matrix4, MaxEquation, Mesh, MeshBasicMaterial, MeshDepthMaterial, MeshDistanceMaterial, MinEquation, MirroredRepeatWrapping, MixOperation, MultiplyBlending, MultiplyOperation, NearestFilter, NearestMipmapLinearFilter, NearestMipmapNearestFilter, NeutralToneMapping, NeverCompare, NeverDepth, NoBlending, NoColorSpace, NoToneMapping, NormalBlending, NotEqualCompare, NotEqualDepth, ObjectSpaceNormalMap, OneFactor, OneMinusConstantAlphaFactor, OneMinusConstantColorFactor, OneMinusDstAlphaFactor, OneMinusDstColorFactor, OneMinusSrcAlphaFactor, OneMinusSrcColorFactor, OrthographicCamera, PCFShadowMap, PCFSoftShadowMap, PMREMGenerator, PerspectiveCamera, Plane, PlaneGeometry, R11_EAC_Format, RED_GREEN_RGTC2_Format, RED_RGTC1_Format, REVISION, RG11_EAC_Format, RGBAFormat, RGBAIntegerFormat, RGBA_ASTC_10x10_Format, RGBA_ASTC_10x5_Format, RGBA_ASTC_10x6_Format, RGBA_ASTC_10x8_Format, RGBA_ASTC_12x10_Format, RGBA_ASTC_12x12_Format, RGBA_ASTC_4x4_Format, RGBA_ASTC_5x4_Format, RGBA_ASTC_5x5_Format, RGBA_ASTC_6x5_Format, RGBA_ASTC_6x6_Format, RGBA_ASTC_8x5_Format, RGBA_ASTC_8x6_Format, RGBA_ASTC_8x8_Format, RGBA_BPTC_Format, RGBA_ETC2_EAC_Format, RGBA_PVRTC_2BPPV1_Format, RGBA_PVRTC_4BPPV1_Format, RGBA_S3TC_DXT1_Format, RGBA_S3TC_DXT3_Format, RGBA_S3TC_DXT5_Format, RGBFormat, RGB_BPTC_SIGNED_Format, RGB_BPTC_UNSIGNED_Format, RGB_ETC1_Format, RGB_ETC2_Format, RGB_PVRTC_2BPPV1_Format, RGB_PVRTC_4BPPV1_Format, RGB_S3TC_DXT1_Format, RGFormat, RGIntegerFormat, RawShaderMaterial, RedFormat, RedIntegerFormat, ReinhardToneMapping, RepeatWrapping, ReverseSubtractEquation, SIGNED_R11_EAC_Format, SIGNED_RED_GREEN_RGTC2_Format, SIGNED_RED_RGTC1_Format, SIGNED_RG11_EAC_Format, SRGBColorSpace, SRGBTransfer, ShaderChunk, ShaderLib, ShaderMaterial, ShortType, SrcAlphaFactor, SrcAlphaSaturateFactor, SrcColorFactor, SubtractEquation, SubtractiveBlending, TangentSpaceNormalMap, Texture, Uint16BufferAttribute, Uint32BufferAttribute, UniformsLib, UniformsUtils, UnsignedByteType, UnsignedInt101111Type, UnsignedInt248Type, UnsignedInt5999Type, UnsignedIntType, UnsignedShort4444Type, UnsignedShort5551Type, UnsignedShortType, VSMShadowMap, Vector2, Vector3, Vector4, WebGLCoordinateSystem, WebGLCubeRenderTarget, WebGLRenderTarget, WebGLRenderer, WebGLUtils, WebXRController, ZeroFactor, createCanvasElement, error, log, warn, warnOnce });
 
 </script>
-<script>window.__SW_BOOT_STAGE__='three-ready';</script>
 <script>
-  window.__SW_BOOT_STAGE__='three-ready';
-  window.__SW_LAST_ERROR__='';
+  // Möglichst ausführlich mitschreiben, falls doch mal ein Fehler durchrutscht —
+  // "Uncaught Error: Script error." allein (ohne Datei/Zeile) deutet auf einen
+  // Fehler in Code hin, den der Browser nicht als "same origin" einstuft; hier
+  // wird zusätzlich alles geloggt, was event.error/event.reason hergeben, das
+  // ist oft ausführlicher als die Kurzfassung oben in der Konsole.
   setTimeout(function(){
-    if(window.__SW_BOOT_STAGE__==='ready')return;
-    var box=document.getElementById('err');
-    if(!box)return;
-    var stage=window.__SW_BOOT_STAGE__||'unknown';
-    var last=window.__SW_LAST_ERROR__||'';
-    box.innerHTML='<div><b>Sommerwind Startdiagnose</b><br><small style="display:block;margin-top:8px;opacity:.78">Stage: '+stage+(last?'<br>'+last:'')+'</small></div>';
-    box.style.display='grid';
-  },12000);
+    if(!window.__sommerwindStarted__) document.getElementById('err').style.display='grid';
+  },9000);
   window.addEventListener('error',function(e){
-    window.__SW_LAST_ERROR__=(e&&e.message?e.message:'Fehler')+' @ '+((e&&e.filename)||'inline')+':'+((e&&e.lineno)||0);
+    console.error('[global error]',e.message,'@',e.filename+':'+e.lineno+':'+e.colno,
+      e.error&&e.error.stack?('\n'+e.error.stack):'(kein Stack verfügbar — vermutlich als "cross-origin" eingestuft)');
   });
   window.addEventListener('unhandledrejection',function(e){
-    window.__SW_LAST_ERROR__='Promise: '+String(e&&e.reason||'unbekannt');
+    console.error('[unhandled promise rejection]',e.reason&&e.reason.stack?e.reason.stack:e.reason);
   });
 </script>
 <div id="photoDrag"></div>
@@ -84702,8 +84699,6 @@ const IS_MOBILE=(function(){
     return coarse&&touch;
   }catch(e){ return (navigator.maxTouchPoints||0)>0; }
 })();
-const SW_IOS_SAFE_RENDER=IS_MOBILE&&/AppleWebKit/i.test(navigator.userAgent||'')&&!/CriOS|FxiOS|EdgiOS|OPiOS/i.test(navigator.userAgent||'');
-window.__SW_IOS_SAFE_RENDER__=SW_IOS_SAFE_RENDER;
 document.documentElement.classList.toggle('is-mobile',IS_MOBILE);
 const REDUCED_MOTION=(function(){try{return matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){return false;}})();
 // Liegt bewusst vor der Renderer-Initialisierung: auch ein sehr früher
@@ -84716,15 +84711,13 @@ let pageSuspended=document.visibilityState==='hidden';
    Farben bleiben genau so, wie sie von Hand abgestimmt wurden — offizieller,
    dokumentierter Ausweg, unabhängig von der gerade gebündelten Version. */
 THREE.ColorManagement.enabled=false;
-window.__SW_BUILD__='AAA_STORYBOOK_LEGACY_BOOT_COMPAT_2026_08_21';
+window.__SW_BUILD__='AAA_SETTLEMENTS_DEEPCLEAN_2026_08_20';
 console.info('[Sommerwind] build',window.__SW_BUILD__);
 'use strict';
 if(typeof THREE==='undefined'||!THREE.Scene){
-  document.getElementById('err').textContent='Three.js konnte nicht initialisiert werden.';
   document.getElementById('err').style.display='grid';
   document.getElementById('loadLayer').style.display='none';
 }else{
-window.__SW_BOOT_STAGE__='bootstrap';
 /* ============================================================
    SOMMERWIND 3D
    Ein Archipel, eine rote Flugboot-Rennmaschine, viel Himmel.
@@ -84901,14 +84894,6 @@ function makeTerrainPlan(o,rg,S){
     plateauZ:side*(.18+ihash(o.ci,o.cj,1061+S)*.16),
     coastA:(ihash(o.ci,o.cj,1091+S)-.5)*1.1,
     coastAmp:o.big?.105:.065,
-    /* Storybook-Midforms: breite, sehr weiche Schulter + kleine Senke.
-       Diese Werte veraendern die Makrokomposition, nicht die Mikro-Noise. */
-    storyX:(ihash(o.ci,o.cj,1095+S)-.5)*.34,
-    storyZ:side*(.20+ihash(o.ci,o.cj,1097+S)*.22),
-    storyW:.46+ihash(o.ci,o.cj,1099+S)*.18,
-    hollowX:(ihash(o.ci,o.cj,1100+S)-.5)*.28,
-    hollowZ:-side*(.14+ihash(o.ci,o.cj,1101+S)*.22),
-    storySoft:.55+ihash(o.ci,o.cj,1102+S)*.38,
     erosionFreq:6+((ihash(o.ci,o.cj,1103+S)*5)|0),
     erosionPhase:ihash(o.ci,o.cj,1117+S)*TAU,
     strataPhase:ihash(o.ci,o.cj,1123+S)*TAU,
@@ -84917,204 +84902,6 @@ function makeTerrainPlan(o,rg,S){
     streamA:axis+side*Math.PI*.5+streamOff,
     lookA:axis-side*Math.PI*.5
   };
-}
-
-
-/* ============================================================
-   STORYBOOK LANDSCAPE COMPOSITION BLUEPRINT
-   ------------------------------------------------------------
-   Jede Insel bekommt vor der sichtbaren Dekoration eine kleine, seedbare
-   "Art-Direction-Karte". Sie beschreibt keine einzelnen Pflanzen, sondern
-   grosse lesbare Massen: Wiesen, Waldkerne, Lichtungen, Bluetenfelder,
-   Feuchtsenken, Kulturterrassen und einen Hero-Punkt. Terrainfarbe,
-   Vegetation und Near-Detail lesen spaeter dieselben Zonen. Dadurch entsteht
-   eine komponierte Landschaft statt "Noise + zufaellige Props".
-   ============================================================ */
-const STORY_MEADOW='sunlitMeadow',STORY_COAST='windCoast',STORY_FOREST='storyForest',
-      STORY_ORCHARD='orchardTerrace',STORY_MIST='mistHollow',STORY_HERO='heroLandscape';
-const STORY_STYLE_NAMES={sunlitMeadow:'Sonnenwiesen',windCoast:'Windkueste',storyForest:'Maerchenwald',
-  orchardTerrace:'Terrassenland',mistHollow:'Nebeltal',heroLandscape:'Hero-Landschaft'};
-function storyHash(is,salt){return ihash(is.ci,is.cj,22001+salt+(is.big?0:13007));}
-function storyPrimaryFor(is,rg){
-  if(is.tp&&is.tp.primary)return STORY_HERO;
-  if(is.kind==='atoll'||is.region==='lagoon')return STORY_COAST;
-  if(is.village)return STORY_ORCHARD;
-  if(is.region==='wet'||(is.big&&is.dry<.31))return storyHash(is,2)<.48?STORY_MIST:STORY_FOREST;
-  if(is.kind==='pines'||is.kind==='alps'||is.region==='alpine')return STORY_FOREST;
-  if(is.kind==='cliff'||is.region==='dry')return storyHash(is,3)<.54?STORY_COAST:STORY_MEADOW;
-  return STORY_MEADOW;
-}
-function storySecondaryFor(is,primary){
-  if(primary===STORY_HERO){
-    if(is.kind==='pines'||is.kind==='alps'||is.region==='wet'||is.region==='alpine')return STORY_FOREST;
-    if(is.kind==='cliff'||is.region==='dry'||is.region==='lagoon')return STORY_COAST;
-    return STORY_MEADOW;
-  }
-  if(primary===STORY_ORCHARD)return STORY_MEADOW;
-  if(primary===STORY_FOREST)return is.dry<.42?STORY_MIST:STORY_MEADOW;
-  if(primary===STORY_MIST)return STORY_FOREST;
-  if(primary===STORY_COAST)return is.village?STORY_ORCHARD:STORY_MEADOW;
-  return is.village?STORY_ORCHARD:(is.big&&is.dry<.40?STORY_FOREST:STORY_COAST);
-}
-/* Storybook Shape Intents: eine klar benannte Makro-Komposition je Insel.
-   `geometryType` bleibt waehrend der Inselplanung stabil, damit Hafen-/Runway-
-   Suche dieselbe Geologie sieht. `type` darf spaeter semantisch zu
-   orchardTerrace/lighthouseSpine/crescentHarbor verfeinert werden, ohne die
-   Gameplay-Geometrie ploetzlich neu zu wuerfeln. */
-const STORY_SHAPE={
-  ROLLING:'rollingMeadow', DOUBLE:'doubleRidgeMeadow', FOREST:'forestBowl',
-  COAST:'coastalShelf', HIGHLAND:'highlandValley', VOLCANIC:'volcanicCrown',
-  LAGOON:'lagoonCrescent', ORCHARD:'orchardTerrace', LIGHTHOUSE:'lighthouseSpine',
-  HARBOR:'crescentHarbor', MIST:'mistBasin'
-};
-function makeStoryShapeIntent(is,rp){
-  let type=STORY_SHAPE.ROLLING;
-  if(is.kind==='atoll'||rp.id==='lagoon')type=STORY_SHAPE.LAGOON;
-  else if(is.kind==='volcano'||rp.id==='ember')type=STORY_SHAPE.VOLCANIC;
-  else if(is.kind==='alps'||is.kind==='peak'||rp.id==='alpine')type=STORY_SHAPE.HIGHLAND;
-  else if(is.kind==='ridge')type=STORY_SHAPE.DOUBLE;
-  else if(is.kind==='pines'||rp.id==='wet')type=STORY_SHAPE.FOREST;
-  else if(is.kind==='cliff'||rp.id==='dry')type=STORY_SHAPE.COAST;
-  const strength=(is.big?.78:.58)+storyHash(is,5)*.18;
-  return {type:type,geometryType:type,strength:strength,
-    axis:is.tp.axis,side:is.tp.side,
-    openness:.46+storyHash(is,6)*.36,
-    asymmetry:(storyHash(is,7)-.5)*.34,
-    calm:.55+storyHash(is,8)*.36};
-}
-function storyZone(is,salt,u,v,rx,rz,kind,strength){
-  return {u:u+(storyHash(is,salt)-.5)*.08,v:v+(storyHash(is,salt+1)-.5)*.08,
-    rx:rx*(.88+storyHash(is,salt+2)*.26),rz:rz*(.88+storyHash(is,salt+3)*.26),
-    a:(storyHash(is,salt+4)-.5)*.72,kind:kind,strength:strength===undefined?1:strength};
-}
-function makeLandscapeComposition(is,rg){
-  const primary=storyPrimaryFor(is,rg),secondary=storySecondaryFor(is,primary);
-  const L={version:2,primaryBiome:primary,secondaryBiome:secondary,
-    shapeIntent:is.storyShapeIntent||makeStoryShapeIntent(is,rg),
-    poetry:.58+storyHash(is,9)*.34,
-    windExposure:.35+rg.open*.42+storyHash(is,10)*.15,
-    windDirection:is.tp.axis+(storyHash(is,11)-.5)*.55,
-    sunBias:(storyHash(is,12)-.5)*.22,
-    colorMood:(storyHash(is,13)-.5)*.16,
-    meadowZones:[],forestZones:[],groveZones:[],flowerZones:[],wetZones:[],terraceZones:[],pathZones:[],
-    clearings:[],heroPoints:[],scenicRidges:[]};
-  const side=is.tp.side;
-  // Zwei grosse ruhige Wiesenfelder bilden die negativen Flaechen der Insel.
-  L.meadowZones.push(storyZone(is,20,-.22, side*.18,.42,.30,'meadow',1));
-  L.meadowZones.push(storyZone(is,26, .28,-side*.18,.34,.27,'meadow',.82));
-  // Waldmasse liegt absichtlich versetzt, damit Wiese und Wald nicht wie
-  // konzentrische Ringe wirken. Feuchte/Nadelregionen bekommen mehr Masse.
-  const forestBoost=(primary===STORY_FOREST||primary===STORY_MIST)?1.18:(primary===STORY_ORCHARD?.72:(primary===STORY_HERO?.54:.62));
-  L.forestZones.push(storyZone(is,40,-.28,-side*.28,.30*forestBoost,.25*forestBoost,'forest',1));
-  if(is.big||forestBoost>1)L.forestZones.push(storyZone(is,46,.27,side*.33,.25*forestBoost,.21*forestBoost,'forest',.88));
-  // Groves sitzen als kleinere rhythmische Inseln zwischen Hauptmassen.
-  for(let k=0;k<(is.big?6:3);k++){
-    const a=storyHash(is,60+k*7)*TAU,rr=.26+storyHash(is,61+k*7)*.43;
-    L.groveZones.push(storyZone(is,62+k*7,Math.cos(a)*rr,Math.sin(a)*rr,.13,.095,'grove',.72+.24*storyHash(is,63+k*7)));
-  }
-  // Lichtungen schneiden bewusst Ruhe in Waldmassen.
-  for(let k=0;k<(is.big?2:1);k++){
-    const f=L.forestZones[k%L.forestZones.length];
-    L.clearings.push(storyZone(is,92+k*7,f.u+(storyHash(is,93+k*7)-.5)*.16,
-      f.v+(storyHash(is,94+k*7)-.5)*.14,.11,.085,'clearing',.85));
-  }
-  // Blüten liegen INNERHALB der Wiesen, nicht als globaler Scatter.
-  for(let k=0;k<(is.big?4:2);k++){
-    const m=L.meadowZones[k%L.meadowZones.length];
-    L.flowerZones.push(storyZone(is,110+k*9,m.u+(storyHash(is,111+k*9)-.5)*.25,
-      m.v+(storyHash(is,112+k*9)-.5)*.18,.075+.035*storyHash(is,113+k*9),
-      .055+.028*storyHash(is,114+k*9),'flower',.7+.3*storyHash(is,115+k*9)));
-  }
-  // Feuchtsenke / Bachtal bleibt auch ohne sichtbaren Bach als kuehlere Mulde.
-  L.wetZones.push(storyZone(is,150,is.tp.passX*.62,side*.13,.18,.31,'wet',primary===STORY_MIST?1:.55));
-  // Siedlungsseite ist bereits durch den Terrainplan definiert; dort wird die
-  // Landschaft spaeter bei bewohnten Inseln kultiviert statt abrupt beendet.
-  L.terraceZones.push(storyZone(is,170,.08,side*.53,.34,.19,'terrace',is.village?1:.28));
-  // Scenic Ridge ist eine lange, duenne Kompositionszone fuer Kammwiesen.
-  L.scenicRidges.push({u:0,v:0,rx:.67,rz:.105,a:0,kind:'ridge',strength:.72});
-  const hp=terrainPlanPoint(is,is.tp.plateauX,is.tp.plateauZ);
-  L.heroPoints.push({u:is.tp.plateauX,v:is.tp.plateauZ,x:hp.x,z:hp.z,
-    kind:is.tp.primary?'primary':(primary===STORY_FOREST&&storyHash(is,190)>.70?'tree':'view'),
-    strength:is.tp.primary?1:.55});
-  if(primary===STORY_HERO){
-    L.clearings.push(storyZone(is,188,is.tp.plateauX,is.tp.plateauZ,.22,.17,'clearing',1));
-    L.meadowZones.push(storyZone(is,189,is.tp.plateauX*.72,is.tp.plateauZ*.72,.30,.22,'meadow',.88));
-  }
-  // Ein gebogener Landschaftspfad verbindet die sanfte Kuestenseite mit
-  // einem Aussichtspunkt. Er ist nur Farbfeld/Vegetationsfreiraum, keine
-  // Gameplay-Strasse und kollidiert daher nicht mit Runway-/Town-Pfaden.
-  const p0={u:.02,v:side*.82},pm={u:(storyHash(is,191)-.5)*.28,v:side*(.28+.14*storyHash(is,192))},pe={u:is.tp.plateauX,v:is.tp.plateauZ};
-  L.pathZones.push({ax:p0.u,az:p0.v,bx:pm.u,bz:pm.v,w:.025+.012*storyHash(is,193),strength:.75});
-  L.pathZones.push({ax:pm.u,az:pm.v,bx:pe.u,bz:pe.v,w:.022+.010*storyHash(is,194),strength:.62});
-  L.heroTree=!!(is.big&&!is.tp.primary&&primary===STORY_FOREST&&storyHash(is,197)>.72);
-  return L;
-}
-function finishLandscapeComposition(is,rg){
-  const L=makeLandscapeComposition(is,rg),SI=L.shapeIntent;
-  // Die semantische Form darf die fertige Inselgeschichte benennen; die
-  // Geometrie benutzt weiter SI.geometryType aus der fruehen Planphase.
-  if(is.hb)SI.type=STORY_SHAPE.HARBOR;
-  else if(is.lighthouse)SI.type=STORY_SHAPE.LIGHTHOUSE;
-  else if(is.village)SI.type=STORY_SHAPE.ORCHARD;
-  else if(L.primaryBiome===STORY_MIST)SI.type=STORY_SHAPE.MIST;
-  // Ein Dorf verschiebt die visuelle Hauptrolle bewusst zur Kulturlandschaft.
-  if(is.village){L.secondaryBiome=L.primaryBiome;L.primaryBiome=STORY_ORCHARD;L.terraceZones[0].strength=1;}
-  // Echte Hydrologie verstaerkt die bereits geplante Feuchtsenke entlang der
-  // kanonischen Stream-Achse; keine zweite Wasser-Simulation.
-  if(is.stream){L.wetZones[0].u=is.tp.passX*.35;L.wetZones[0].v=is.tp.side*.05;L.wetZones[0].rx=.20;L.wetZones[0].rz=.46;L.wetZones[0].strength=1;}
-  if(is.kind==='atoll'){L.forestZones.length=0;L.clearings.length=0;L.meadowZones[0].strength=.42;}
-  is.landscape=L;return L;
-}
-function storyZoneField(z,u,v){
-  const ca=Math.cos(z.a||0),sa=Math.sin(z.a||0),dx=u-z.u,dv=v-z.v;
-  const x=dx*ca+dv*sa,y=-dx*sa+dv*ca;
-  const q=(x*x)/(z.rx*z.rx)+(y*y)/(z.rz*z.rz);
-  return Math.exp(-q*2.25)*(z.strength===undefined?1:z.strength);
-}
-function storyPathField(p,u,v){
-  const dx=p.bx-p.ax,dz=p.bz-p.az,ll=dx*dx+dz*dz||1,t=clamp(((u-p.ax)*dx+(v-p.az)*dz)/ll,0,1);
-  const qx=u-(p.ax+dx*t),qz=v-(p.az+dz*t),q=Math.sqrt(qx*qx+qz*qz)/(p.w||.03);
-  return Math.exp(-q*q*1.7)*(p.strength===undefined?1:p.strength);
-}
-const _storyFields={meadow:0,forest:0,flower:0,wet:0,terrace:0,clear:0,grove:0,path:0,ridge:0,
-  wind:0,coast:0,shoreGlow:0,coastTransition:0,coastEdge:0,macroSlope:0,convexity:0,moisture:0,
-  sunExposure:.5,coastDistance:0,pathDistance:99999,rockField:0,u:0,v:0};
-function storyPathDistance(p,u,v){
-  const dx=p.bx-p.ax,dz=p.bz-p.az,ll=dx*dx+dz*dz||1,t=clamp(((u-p.ax)*dx+(v-p.az)*dz)/ll,0,1);
-  return Math.hypot(u-(p.ax+dx*t),v-(p.az+dz*t));
-}
-function landscapeFieldsAt(is,x,z,out,h,sl){
-  out=out||_storyFields;out.meadow=out.forest=out.flower=out.wet=out.terrace=out.clear=out.grove=out.path=out.ridge=0;
-  const L=is&&is.landscape;if(!L){out.wind=out.coast=out.shoreGlow=out.coastTransition=out.coastEdge=0;out.u=out.v=0;out.pathDistance=99999;return out;}
-  let dx=x-is.cx,dz=z-is.cz;
-  if(is.rot){const c=Math.cos(is.rot),sn=Math.sin(is.rot),nx=dx*c+dz*sn,nz=-dx*sn+dz*c;dx=nx;dz=nz;}
-  dx/=is.ax||1;dz/=is.az||1;const u=dx/is.r,v=dz/is.r;out.u=u;out.v=v;
-  function maxZones(a,k){let q=0;for(let i=0;i<a.length;i++)q=Math.max(q,storyZoneField(a[i],u,v));out[k]=clamp(q,0,1);}
-  maxZones(L.meadowZones,'meadow');maxZones(L.forestZones,'forest');maxZones(L.groveZones,'grove');
-  maxZones(L.flowerZones,'flower');maxZones(L.wetZones,'wet');maxZones(L.terraceZones,'terrace');maxZones(L.clearings,'clear');maxZones(L.scenicRidges,'ridge');
-  let pathD=999;
-  for(let i=0;i<L.pathZones.length;i++){out.path=Math.max(out.path,storyPathField(L.pathZones[i],u,v));pathD=Math.min(pathD,storyPathDistance(L.pathZones[i],u,v));}
-  out.path=clamp(out.path,0,1);out.forest*=1-out.clear*.92;out.grove*=1-out.clear*.72;
-  const r=Math.hypot(u,v),dir=Math.atan2(v,u),windFace=.5+.5*Math.cos(dir-L.windDirection);
-  out.wind=clamp(L.windExposure*(.30+.70*smoothstep(.34,.94,r))*(.72+.28*windFace),0,1);
-  out.coast=smoothstep(.58,.98,r);
-  // Drei echte Kuestenzonen statt eines einzigen coast-Werts.
-  out.shoreGlow=smoothstep(.86,1.01,r);
-  out.coastTransition=smoothstep(.67,.88,r)*(1-smoothstep(.94,1.04,r));
-  out.coastEdge=smoothstep(.50,.70,r)*(1-smoothstep(.83,.96,r));
-  out.coastDistance=Math.max(0,(1-r)*is.r);
-  out.pathDistance=pathD*is.r*Math.sqrt(Math.max(.35,(is.ax||1)*(is.az||1)));
-  out.macroSlope=sl===undefined?clamp(out.ridge*.34+out.coastEdge*.18,0,1):clamp(sl,0,1);
-  out.convexity=clamp(out.ridge*.72+out.coastEdge*.18-out.wet*.58-out.clear*.12,-1,1);
-  out.moisture=clamp(out.wet*.78+out.forest*.18+(1-out.wind)*.08-out.shoreGlow*.12,0,1);
-  out.sunExposure=clamp(.52+.22*Math.cos(dir-Math.atan2(sunDir.z,sunDir.x))+.18*sunDir.y+L.sunBias,0,1);
-  const relH=h===undefined?0:clamp(h/Math.max(is.h,1),0,1);
-  out.rockField=clamp(smoothstep(.30,.64,out.macroSlope)*.78+smoothstep(.62,.90,relH)*.30+out.coastEdge*.12,0,1);
-  return out;
-}
-function storyZoneLocalPoint(is,z){
-  const nx=z.u*is.r*(is.ax||1),nz=z.v*is.r*(is.az||1),c=Math.cos(is.rot||0),s=Math.sin(is.rot||0);
-  return {x:nx*c-nz*s,z:nx*s+nz*c};
 }
 
 /* Weiche analytische Primitive. Alle Koordinaten sind bereits in der
@@ -85198,7 +84985,6 @@ function makeIsland(ci,cj,big){
   }
   const stature=o.tp.primary?1.16:(o.tp.secondary?1.04:(o.tp.quiet ? .90 : 1));
   o.h=clamp(o.h*stature,24,big?1520:340);
-  o.storyShapeIntent=makeStoryShapeIntent(o,rp);
   const f=h7;
   if(big){
     o.village=f<.62 && kind!=='volcano';
@@ -85253,7 +85039,6 @@ function makeIsland(ci,cj,big){
   }
   if((o.big&&o.kind!=='volcano')||(!o.big&&o.r>640&&o.h>45&&o.h<300))
     o.rw=pickRunway(o);
-  finishLandscapeComposition(o,rg);
   return o;
 }
 function pickBayAngle(o){
@@ -85489,63 +85274,6 @@ function islandH(is,x,z){
     const h2=ellipseField(u,v,tp.p2,-tp.side*.24,.58,.44);
     macro=.085*Math.pow(fs,1.45)+.34*h1+.25*h2-.07*valley;
   }
-  /* Storybook Shape Intent: klar benannte Makro-Archetypen. Die Werte sind
-     absichtlich klein genug, um vorhandene Gameplay-Hoehen nicht umzuschreiben,
-     aber gross genug, um die Silhouette aus Kilometern zu komponieren. */
-  const SI=is.storyShapeIntent;
-  if(SI&&!is.ring){
-    const st=(SI.strength||.7),gt=SI.geometryType||SI.type;
-    if(gt===STORY_SHAPE.ROLLING){
-      macro+=.035*st*ellipseField(u,v,-.24,tp.side*.16,.62,.46)+.025*st*ellipseField(u,v,.31,-tp.side*.18,.56,.42);
-      macro-=.018*st*ellipseField(u,v,.02,0,.28,.23);
-    }else if(gt===STORY_SHAPE.DOUBLE){
-      macro+=.032*st*capsuleField(u,v,-.46,-tp.side*.12,.52,tp.side*.13,.16);
-      macro+=.025*st*capsuleField(u,v,-.42,tp.side*.28,.46,tp.side*.42,.14);
-    }else if(gt===STORY_SHAPE.FOREST){
-      /* Kein konzentrischer Ring/Bowl: aus der Luft las sich das wie ein
-         kuenstlicher Donut. Zwei versetzte Waldschultern plus eine kleine,
-         ebenfalls versetzte Lichtungsmulde ergeben dieselbe geschuetzte
-         Waldform, aber mit organischer, asymmetrischer Silhouette. */
-      const shA=ellipseField(u,v,-.24,-tp.side*.16,.66,.47);
-      const shB=ellipseField(u,v,.30,tp.side*.23,.54,.39);
-      const glade=ellipseField(u,v,.12,-tp.side*.07,.30,.23);
-      macro+=.020*st*shA+.014*st*shB-.009*st*glade;
-    }else if(gt===STORY_SHAPE.COAST){
-      macro+=.024*st*ellipseField(u,v,-.06,tp.side*.26,.76,.38);
-      macro-=.018*st*ellipseField(u,v,.10,-tp.side*.42,.50,.22);
-    }else if(gt===STORY_SHAPE.HIGHLAND){
-      macro+=.025*st*capsuleField(u,v,tp.p1,0,tp.sec1X,tp.sec1Z,.19);
-      macro-=.020*st*capsuleField(u,v,tp.passX,-.08,tp.passX,tp.side*.68,.24);
-    }else if(gt===STORY_SHAPE.VOLCANIC){
-      macro+=.012*st*ellipseField(u,v,0,0,.62,.62);
-    }
-  }
-  if(SI&&SI.type&&SI.type!==(SI.geometryType||SI.type)){
-    const st=(SI.strength||.7),sv=v*tp.settleSide;
-    if(SI.type===STORY_SHAPE.ORCHARD){
-      // Zwei breite Kultur-Schultern; keine harte geometrische Treppe.
-      macro+=.018*st*ellipseField(u,v,.06,tp.settleSide*.42,.62,.20);
-      macro+=.012*st*ellipseField(u,v,-.12,tp.settleSide*.58,.48,.15);
-    }else if(SI.type===STORY_SHAPE.LIGHTHOUSE){
-      macro+=.022*st*capsuleField(u,v,0,0,tp.plateauX,tp.plateauZ,.14);
-      macro+=.010*st*ellipseField(u,v,tp.plateauX,tp.plateauZ,.24,.20);
-    }else if(SI.type===STORY_SHAPE.MIST){
-      macro-=.020*st*ellipseField(u,v,tp.hollowX,tp.hollowZ,.52,.38);
-    }else if(SI.type===STORY_SHAPE.HARBOR){
-      macro-=.012*st*ellipseField(u,v,.02,tp.settleSide*.52,.48,.21)*smoothstep(.18,.82,sv+.3);
-    }
-  }
-  /* Storybook shape pass: grosse, ruhige Mittelformen statt weiterer
-     hochfrequenter Noise. Eine breite Schulter macht Wiesen-/Waldflaechen
-     lesbar; eine flache Gegenmulde erzeugt Sattel/Lichtung. Dramatische
-     Vulkan-/Atollformen werden nur minimal angefasst. */
-  if(!is.ring&&is.kind!=='volcano'){
-    const storyShoulder=ellipseField(u,v,tp.storyX,tp.storyZ,tp.storyW,tp.storyW*.68);
-    const storyHollow=ellipseField(u,v,tp.hollowX,tp.hollowZ,tp.storyW*.62,tp.storyW*.46);
-    const storyAmt=(is.kind==='alps'||is.kind==='peak')?.030:(is.kind==='cliff'?.022:.046);
-    macro+=storyShoulder*storyAmt*tp.storySoft*(1-.68*pass)*(1-.52*valley);
-    macro-=storyHollow*storyAmt*.58*(1-.45*main);
-  }
   macro=clamp(macro,0,1.04);
   let hh=is.h*macro*coast;
 
@@ -85553,14 +85281,10 @@ function islandH(is,x,z){
      gewichtet. Sie kann weder Pass noch Tal schliessen und skaliert bei
      1500-m-Bergen nicht mehr zu hunderten Metern hoch. */
   let detail=coast*(1-.72*pass)*(1-.46*valley);
-  // Der Storybook-Pass haelt die Kuestensilhouette bewusst ruhiger: weniger
-  // Mikro-Noise im letzten Viertel der Insel, dafuer klarere Buchten/Kanten.
-  detail*=1-smoothstep(.68,.98,d)*(.18+.16*tp.storySoft);
   if(is.kind==='cliff')detail*=1-.62*plateau;
   else detail*=1-.30*main;
   if(is.ring)detail*=.24;
-  const storyDetail=is.landscape?.58:1;
-  const cap=(is.ring?2.4:(is.big?Math.min(40,is.h*.055):Math.min(11,is.h*.070)))*storyDetail;
+  const cap=is.ring?2.4:(is.big?Math.min(40,is.h*.055):Math.min(11,is.h*.070));
   const n0=fbm2(x*.0011+is.seed*7,z*.0011+3,2)*2-1;
   const n1=fbm2(x*.0017+is.seed*3,z*.0017,2)*2-1;
   const n2=fbm2(x*.0078,z*.0078,2)*2-1;
@@ -85580,13 +85304,6 @@ function islandH(is,x,z){
   }else if(is.kind==='cliff'&&v*tp.side<.04&&d>.25&&d<.84){
     const stepH=is.big?20:6.5, ledge=Math.floor((hh+Math.sin(tp.strataPhase+u*7)*3)/stepH)*stepH;
     hh=lerp(hh,ledge+stepH*.48,.12*smoothstep(.24,.66,plateau));
-  }
-  /* Landschaftspfade sind nicht nur Farbe: eine sehr flache Mulde drueckt
-     den Boden physisch ein und beruhigt das unmittelbare Profil. Keine
-     Gameplay-Strasse, nur 0.5–1.8 m Storybook-Trittspur. */
-  if(is.landscape){
-    const pf=landscapeFieldsAt(is,x,z,_storyFields,hh,0).path;
-    if(pf>.02){const pd=(is.big?1.8:.65)*smoothstep(.02,.80,pf);hh-=pd;}
   }
   /* Der sichtbare Bach bekommt ein flaches Bett. Maximal vier Meter tief,
      deshalb bleiben Physik, Wegeplanung und grobes Inselprofil stabil. */
@@ -85719,25 +85436,15 @@ function slopeAt(x,z,h){
 /* ============================================================
    Renderer, Kamera, Licht
    ============================================================ */
-window.__SW_BOOT_STAGE__='renderer';
-/* Bewährter Mobile-Bootpfad aus der funktionierenden Engineering-Bay-Version:
-   Three.js erstellt den WebGL2-Kontext selbst. Kein manuelles getContext(),
-   keine mehrfachen Renderer-Versuche und damit kein WebView-spezifischer
-   Context-Lifecycle vor dem ersten Frame. */
-const renderer=new THREE.WebGLRenderer({
-  antialias:!IS_MOBILE,
-  powerPreference:IS_MOBILE?'default':'high-performance'
-});
-window.__SW_RENDERER__=renderer;
-window.__SW_RENDERER_ATTEMPT__=1;
+const renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
 // Kein zusätzliches Gamma-Encoding am Ausgang — zusammen mit ColorManagement.
 // enabled=false oben reproduziert das genau das ursprünglich abgestimmte Verhalten.
 renderer.outputColorSpace=THREE.LinearSRGBColorSpace;
-renderer.shadowMap.enabled=!SW_IOS_SAFE_RENDER;
+renderer.shadowMap.enabled=true;
 renderer.shadowMap.type=THREE.PCFShadowMap;
 // Standard: hohe Geräteauflösung bis DPR 1.5. Einzelne Presets oder ein
 // vorhandener Spielstand dürfen diesen Wert anschließend gezielt ändern.
-let PR=IS_MOBILE?1:Math.min(window.devicePixelRatio||1,1.35);
+let PR=Math.min(window.devicePixelRatio||1,1.5);
 let PR_MAX=PR;     // Obergrenze für Presets mit automatischer Reserve
 /* Dynamische Auflösungsskalierung fürs Nachbearbeitungs-Ziel (rtS & Co,
    siehe buildPost): sinkt sie unter 1, rendert die eigentliche 3D-Szene
@@ -85750,7 +85457,7 @@ let PR_MAX=PR;     // Obergrenze für Presets mit automatischer Reserve
    selbst sind ohne die jeweilige Vendor-SDK im Browser nicht nachbaubar. */
 // Der neue Standard rendert die Szene in voller interner Auflösung.
 // Niedrigere Presets dürfen weiterhin bewusst mit reduzierter Skala arbeiten.
-let RENDER_SCALE=IS_MOBILE?.8:1;
+let RENDER_SCALE=1;
 let RENDER_SCALE_BASE=RENDER_SCALE;
 // War .62 — seit die Kaskaden-Eigenverschattung, SSAO und SSR dazukamen,
 // greift die Auflösungs-Absenkung unter Last öfter und bleibt dort auch
@@ -85816,8 +85523,8 @@ let sandAmt=0;  // Staub eines Sandsturms (EV.kind==='sandstorm') — selbe frü
    sofort da/weg zu sein, siehe updateRain(). Eigenes, geteiltes Uniform-
    Objekt (wie vegMat.userData.uTime), damit der Terrain-Shader unten
    denselben Wert live mitliest. */
-let wetAmt=0,afterRainAmt=0,afterRainMemory=0;
-const terrainWetU={value:0},storyAfterRainU={value:0};
+let wetAmt=0;
+const terrainWetU={value:0};
 const terrainTimeU={value:0};
 // Sturmböen: multipliziert die ohnehin vorhandene Wind-Wiegung von
 // vegMat/grassMat (siehe dort) mit der echten, live gemessenen
@@ -85886,19 +85593,6 @@ for(const t of TIMES){
   t._cl=new THREE.Color(t.cl); t._cd=new THREE.Color(t.cd);
   t._hs=new THREE.Color(t.hs); t._hg=new THREE.Color(t.hg);
 }
-/* Eigenes Storybook-Color-Script fuer das Terrain. */
-const STORY_TIME_GRADE=[
-  {lit:0xffe5b5,shadow:0x68827a,amt:.070,sat:1.035},
-  {lit:0xfff5d8,shadow:0x708a7e,amt:.035,sat:1.018},
-  {lit:0xffdfaa,shadow:0x687b72,amt:.060,sat:1.028},
-  {lit:0xffbd82,shadow:0x59686e,amt:.105,sat:1.025},
-  {lit:0xd8a2a8,shadow:0x4d5d78,amt:.095,sat:.970},
-  {lit:0x8091b2,shadow:0x36445e,amt:.075,sat:.900},
-  {lit:0xd8b2a8,shadow:0x536a7d,amt:.085,sat:.955}
-];
-for(const g of STORY_TIME_GRADE){g._lit=new THREE.Color(g.lit);g._shadow=new THREE.Color(g.shadow);}
-const storyLitTintU={value:new THREE.Color(0xfff5d8)},storyShadowTintU={value:new THREE.Color(0x708a7e)},
-      storyGradeU={value:.035},storySaturationU={value:1.018};
 let dayT=1.55;                       // zwischen Mittag und Nachmittag
 const DAYLEN=780;                    // Sekunden für einen vollen Umlauf (Tagesabschnitte)
 let nightAmt=0;                      // 0=Tag, 1=tiefe Nacht — für Sterne, Landebahnlichter usw.
@@ -86096,7 +85790,7 @@ function addCascadeShadow(mat){
             if(cscDist<${CASCADE_SELECT[0]}.0)cscShadow=cscSample(tCsc0,uCscVP0,vCsmWP,1.0/${CASCADE_RES[0]}.0,cscBias);
             else cscShadow=cscSample(tCsc1,uCscVP1,vCsmWP,1.0/${CASCADE_RES[1]}.0,cscBias);
             // Nur dämpfen, nie das Umgebungslicht verschlucken.
-            gl_FragColor.rgb*=max(mix(1.0,cscShadow,0.24*cscFade),0.84);
+            gl_FragColor.rgb*=max(mix(1.0,cscShadow,0.55*cscFade),0.62);
           }
         }`);
   };
@@ -86105,12 +85799,8 @@ function applyTime(){
   const n=TIMES.length;
   const i=Math.floor(dayT)%n, j=(i+1)%n;
   let k=dayT-Math.floor(dayT); k=k*k*(3-2*k);
-  const a=TIMES[i], b=TIMES[j],ga=STORY_TIME_GRADE[i],gb=STORY_TIME_GRADE[j];
+  const a=TIMES[i], b=TIMES[j];
   timeName=k<.5?a.name:b.name;
-  storyLitTintU.value.lerpColors(ga._lit,gb._lit,k);
-  storyShadowTintU.value.lerpColors(ga._shadow,gb._shadow,k);
-  storyGradeU.value=lerp(ga.amt,gb.amt,k);
-  storySaturationU.value=lerp(ga.sat,gb.sat,k);
   const elv=lerp(a.el,b.el,k)*DEG;
   let azb=b.az; if(azb<a.az)azb+=360;
   const azm=lerp(a.az,azb,k)*DEG;
@@ -87572,66 +87262,6 @@ function buildTerrainDetailAtlas(){
 }
 const terrainDetailAtlas=buildTerrainDetailAtlas();
 
-/* Vier kleine handgemalte Canvas-Layer. Sie sind absichtlich grob und
-   niederfrequent: das Ziel ist Gouache-/Aquarell-Fluktuation, nicht eine
-   fotorealistische Materialtextur. Keine Datei, kein Assetdownload. */
-function buildStorybookPaintTexture(kind,seed){
-  const c=document.createElement('canvas');c.width=256;c.height=256;
-  const g=c.getContext('2d',{alpha:false});let st=seed>>>0;
-  const R=function(){st=(Math.imul(st,1664525)+1013904223)>>>0;return st/4294967296;};
-  const base=kind==='brush'?154:(kind==='meadow'?148:(kind==='path'?160:142));
-  g.fillStyle='rgb('+base+','+base+','+base+')';g.fillRect(0,0,256,256);
-  // Breite, transparente Washes erzeugen unregelmaessige Handmalerei.
-  const washes=kind==='brush'?44:32;
-  for(let i=0;i<washes;i++){
-    const x=R()*256,y=R()*256,rx=18+R()*82,ry=12+R()*58;
-    const q=base+Math.round((R()-.5)*(kind==='stone'?58:42));
-    const grd=g.createRadialGradient(x,y,0,x,y,Math.max(rx,ry));
-    grd.addColorStop(0,'rgba('+q+','+q+','+q+','+(0.16+R()*.20)+')');
-    grd.addColorStop(.65,'rgba('+q+','+q+','+q+','+(0.05+R()*.08)+')');
-    grd.addColorStop(1,'rgba('+q+','+q+','+q+',0)');
-    g.save();g.translate(x,y);g.scale(1,ry/rx);g.translate(-x,-y);g.fillStyle=grd;g.fillRect(x-rx,y-rx,rx*2,rx*2);g.restore();
-  }
-  // Sehr sparsame Pinseladern je Materialfamilie.
-  g.globalAlpha=.09;
-  g.lineCap='round';
-  for(let i=0;i<(kind==='stone'?30:18);i++){
-    const q=base+Math.round((R()-.5)*62);g.strokeStyle='rgb('+q+','+q+','+q+')';
-    g.lineWidth=1+R()*4;g.beginPath();const y=R()*256,x=R()*256;g.moveTo(x,y);
-    if(kind==='path')g.bezierCurveTo(x+50,y+R()*10-5,x+110,y+R()*12-6,x+180,y+R()*8-4);
-    else if(kind==='stone')g.bezierCurveTo(x+20,y+R()*30-15,x+55,y+R()*40-20,x+90,y+R()*34-17);
-    else g.bezierCurveTo(x+35,y+R()*22-11,x+70,y+R()*26-13,x+120,y+R()*20-10);
-    g.stroke();
-  }
-  g.globalAlpha=1;
-  const tex=new THREE.CanvasTexture(c);tex.colorSpace=THREE.NoColorSpace;
-  tex.wrapS=tex.wrapT=THREE.RepeatWrapping;tex.minFilter=THREE.LinearMipmapLinearFilter;tex.magFilter=THREE.LinearFilter;
-  tex.generateMipmaps=true;tex.anisotropy=Math.min(4,renderer.capabilities.getMaxAnisotropy?renderer.capabilities.getMaxAnisotropy():1);
-  return tex;
-}
-const terrainBrushTex=buildStorybookPaintTexture('brush',41011),
-      terrainMeadowTex=buildStorybookPaintTexture('meadow',41017),
-      terrainPathTex=buildStorybookPaintTexture('path',41023),
-      terrainStoneTex=buildStorybookPaintTexture('stone',41029);
-/* Nebeltäler benutzen nur eine weiche, lokal generierte Alpha-Wolke. Kein
-   Partikelsystem und keine volumetrische PostFX: eine geländefolgende Fläche
-   reicht für den märchenhaften Morgenhauch und bleibt auf Mobile billig. */
-function buildStorybookMistTexture(){
-  const c=document.createElement('canvas');c.width=c.height=128;
-  const g=c.getContext('2d');g.clearRect(0,0,128,128);
-  let st=51973;const R=()=>{st=(Math.imul(st,1664525)+1013904223)>>>0;return st/4294967296;};
-  for(let i=0;i<18;i++){
-    const x=22+R()*84,y=20+R()*88,r=16+R()*34;
-    const gr=g.createRadialGradient(x,y,0,x,y,r);gr.addColorStop(0,'rgba(255,255,255,'+(0.08+R()*.15)+')');gr.addColorStop(1,'rgba(255,255,255,0)');
-    g.fillStyle=gr;g.fillRect(x-r,y-r,r*2,r*2);
-  }
-  const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.NoColorSpace;t.wrapS=t.wrapT=THREE.ClampToEdgeWrapping;
-  t.minFilter=THREE.LinearFilter;t.magFilter=THREE.LinearFilter;t.generateMipmaps=false;return t;
-}
-const storybookMistTex=buildStorybookMistTexture();
-const storybookMistMat=new THREE.MeshBasicMaterial({color:0xc8ded7,map:storybookMistTex,transparent:true,opacity:.22,
-  depthWrite:false,side:THREE.DoubleSide,fog:true});
-
 const landMat=new THREE.MeshLambertMaterial({vertexColors:true});
 /* Mid/Far terrain intentionally stays on a plain Lambert path. It carries the
    same deterministic vertex colours and fog, but none of the near-only
@@ -87771,29 +87401,19 @@ const cityGlowMat=makeCityGlowMat(0),cityShopGlowMat=makeCityGlowMat(1),cityWork
    aber weder Boden-Körnung noch Regenpfützen. Hängt sich an ein
    bestehendes onBeforeCompile an (vegMat/grassMat wiegen sich im Wind),
    statt es zu ersetzen — siehe addCascadeShadow für dieselbe Verkettung. */
-function addNightFloor(mat,dayLift){
-  const prevCompile=mat.onBeforeCompile,dl=dayLift===undefined?.026:dayLift;
+function addNightFloor(mat){
+  const prevCompile=mat.onBeforeCompile;
   mat.onBeforeCompile=function(shader){
     if(prevCompile)prevCompile.call(mat,shader);
-    shader.uniforms.uNight=terrainNightU;shader.uniforms.uDayLift={value:dl};
+    shader.uniforms.uNight=terrainNightU;
     shader.fragmentShader=shader.fragmentShader
-      .replace('#include <common>','#include <common>\nuniform float uNight,uDayLift;')
+      .replace('#include <common>','#include <common>\nuniform float uNight;')
       .replace('#include <opaque_fragment>',`#include <opaque_fragment>
-        {
-          float swLum=dot(gl_FragColor.rgb,vec3(.299,.587,.114));
-          float swDark=(1.0-smoothstep(.10,.34,swLum))*(1.0-uNight);
-          gl_FragColor.rgb+=vec3(.82,1.0,.66)*uDayLift*swDark;
-          gl_FragColor.rgb+=uNight*vec3(0.085,0.105,0.145);
-        }`);
+        gl_FragColor.rgb+=uNight*vec3(0.085,0.105,0.145);`);
   };
-  /* Wert im Custom-Cache-Key unterscheiden, damit Three bei mehreren
-     Materialfamilien keinen Shader mit anderer Day-Lift-Staerke wiederverwendet. */
-  const oldKey=mat.customProgramCacheKey?mat.customProgramCacheKey.bind(mat):null;
-  mat.customProgramCacheKey=function(){return (oldKey?oldKey():'')+'|sw-daylift-'+dl.toFixed(3);};
-  mat.userData.swDayLift=dl;
 }
-addNightFloor(propMat,.030);
-addNightFloor(landLodMat,.020);
+addNightFloor(propMat);
+addNightFloor(landLodMat);
 /* Eigenes Material fürs Wind-Wiegen der Baumkronen — bewußt NICHT propMat
    erweitert, das teilen sich Häuser, Boote und Dorfbewohner, die sich nicht
    im Wind wiegen sollen. Die Auslenkung wächst mit der lokalen Höhe im
@@ -87831,7 +87451,7 @@ vegMat.onBeforeCompile=function(shader){
     .replace('#include <color_fragment>',`#include <color_fragment>
       diffuseColor.rgb=mix(diffuseColor.rgb,diffuseColor.rgb*vec3(0.66,0.73,0.69),uWet*0.34);`);
 };
-addNightFloor(vegMat,.082);
+addNightFloor(vegMat);
 /* Graswiesen — ein Kreuz aus zwei schmalen, sich verjüngenden Halmen pro
    Instanz (6 Ecken, 2 Dreiecke), damit man aus jedem Blickwinkel etwas
    Fläche sieht, ohne pro Halm zur Kamera drehen zu müssen. Wiegt sich
@@ -87858,31 +87478,6 @@ function buildGrassGeo(){
   g.computeBoundingSphere();
   return g;
 }
-/* Sechs echte Wiesenfamilien. Sie teilen Material/Poollogik, besitzen aber
-   unterschiedliche Silhouetten statt nur andere Farben oder Skalierungen. */
-const STORY_GRASS_FAMILIES=['short','tall','wind','dry','coastal','wet'];
-function buildGrassFamilyGeo(kind){
-  const verts=[];
-  const cfg={
-    short:[3,.055,.46,.00], tall:[4,.060,.86,.02], wind:[3,.052,.70,.16],
-    dry:[3,.045,.66,.05], coastal:[4,.065,.52,.10], wet:[5,.055,.96,.025]
-  }[kind]||[3,.055,.68,0];
-  const n=cfg[0],w=cfg[1],h=cfg[2],lean=cfg[3];
-  for(let i=0;i<n;i++){
-    const rot=i/n*TAU+(i%2)*.17,c=Math.cos(rot),sn=Math.sin(rot),off=(i-(n-1)*.5)*.035;
-    const pts=[[-w,0,off],[w,0,off],[lean+(i%2?-.025:.025),h,off*.3]];
-    for(const q of pts){const x=q[0]*c-q[2]*sn,z=q[0]*sn+q[2]*c;verts.push(x,q[1],z);}
-  }
-  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(verts,3));g.computeVertexNormals();g.computeBoundingSphere();return g;
-}
-function storyGrassFamily(is,biome,f){
-  if(biome===BIOME_DRY||biome===BIOME_VOLCANIC)return 'dry';
-  if(f&&f.shoreGlow>.38)return 'coastal';
-  if(f&&f.wet>.42)return 'wet';
-  if(f&&f.wind>.58)return 'wind';
-  if(f&&f.meadow>.58)return 'tall';
-  return 'short';
-}
 const grassMat=new THREE.MeshLambertMaterial({side:THREE.DoubleSide});
 grassMat.userData.uTime={value:0};
 grassMat.onBeforeCompile=function(shader){
@@ -87901,7 +87496,7 @@ grassMat.onBeforeCompile=function(shader){
       transformed.x+=sway*windAmt;
       transformed.z+=sway*0.6*windAmt;`);
 };
-addNightFloor(grassMat,.032);
+addNightFloor(grassMat);
 /* AAA-Feinschliff fürs Gelände: eine feine prozedurale Mikro-Störung der
    Normalen (steht für Sand-/Fels-/Graskörnung, ohne echte Texturen laden
    zu müssen) plus ein zartes Fresnel-Streiflicht in Sonnenfarbe an
@@ -87917,8 +87512,6 @@ function addTerrainSheen(mat){
     shader.uniforms.uCloudAmt=terrainCloudU;
     shader.uniforms.uAerialCol={value:C.hor};
     shader.uniforms.tTerrainDetail=terrainDetailAtlas;
-    shader.uniforms.tTerrainBrush=terrainBrushTex;shader.uniforms.tTerrainMeadow=terrainMeadowTex;
-    shader.uniforms.tTerrainPath=terrainPathTex;shader.uniforms.tTerrainStone=terrainStoneTex;
     shader.vertexShader=shader.vertexShader
       .replace('#include <common>','#include <common>\nvarying vec3 vWP;\nvarying vec3 vWN;')
       .replace('#include <begin_vertex>',
@@ -87935,7 +87528,6 @@ function addTerrainSheen(mat){
         uniform vec3 uRimDir,uRimCol,uAerialCol;
         uniform float uWet,uNight,uCloudTime,uCloudAmt;
         uniform sampler2D tSSR,tSSRDepth,tTerrainDetail;
-        uniform sampler2D tTerrainBrush,tTerrainMeadow,tTerrainPath,tTerrainStone;
         uniform float uSSREnabled;
         uniform mat4 uSSRProj,uSSRView;
         float tHash(vec2 p){p=fract(p*vec2(115.7,132.9));p+=dot(p,p+31.19);return fract(p.x*p.y);}
@@ -87956,11 +87548,6 @@ function addTerrainSheen(mat){
           float z=terrainAtlas(p.xy*scale,cell);
           return x*w.x+y*w.y+z*w.z;
         }
-        vec2 paintRot(vec2 p){mat2 r=mat2(.819,-.574,.574,.819);return r*(p*.61)+vec2(.37,.19);}
-        float paintBrush(vec2 p){return mix(texture2D(tTerrainBrush,p).r,texture2D(tTerrainBrush,paintRot(p)).r,.46);}
-        float paintMeadow(vec2 p){return mix(texture2D(tTerrainMeadow,p).r,texture2D(tTerrainMeadow,paintRot(p)).r,.46);}
-        float paintPath(vec2 p){return mix(texture2D(tTerrainPath,p).r,texture2D(tTerrainPath,paintRot(p)).r,.46);}
-        float paintStone(vec2 p){return mix(texture2D(tTerrainStone,p).r,texture2D(tTerrainStone,paintRot(p)).r,.46);}
         // Wörtlich dieselbe Marschtechnik wie ssrTrace() im Ozean-Shader —
         // dieselbe Vorwoche-Aufnahme (tSSR/tSSRDepth), nur hier zusätzlich
         // fürs Gelände abgerufen. Kein zweiter Erfassungs-Durchlauf.
@@ -88007,7 +87594,7 @@ function addTerrainSheen(mat){
             float e=0.6;
             float hL=tNoise(dp-vec2(e,0.0)), hR=tNoise(dp+vec2(e,0.0));
             float hD=tNoise(dp-vec2(0.0,e)), hU=tNoise(dp+vec2(0.0,e));
-            normal=normalize(normal+vec3((hL-hR)*0.9,0.0,(hD-hU)*0.9)*0.075*distFade);
+            normal=normalize(normal+vec3((hL-hR)*0.9,0.0,(hD-hU)*0.9)*0.14*distFade);
           }
         }`)
       .replace('#include <color_fragment>',`#include <color_fragment>
@@ -88024,24 +87611,10 @@ function addTerrainSheen(mat){
 
           // Langsam wandernde, grossflaechige Wolkenschatten verbinden
           // Himmel und Boden, ohne zusaetzliche Geometrie oder Texturen.
-          vec2 cp=vWP.xz*0.00028+vec2(uCloudTime*0.0038,-uCloudTime*0.0026);
-          float cloud=tNoise(cp*1.55)+tNoise(cp*2.45+vec2(13.2,7.4))*.34;
-          cloud=smoothstep(.66,1.04,cloud)*uCloudAmt;
-          diffuseColor.rgb*=1.0-cloud*.085;
-
-          /* Grosse Canvas-Washes: zwei gedrehte Weltprojektionen vermeiden
-             sichtbare Kachelung. Nur 4-7 Prozent Einfluss — Farbe bleibt
-             aus dem Landscape Blueprint, die Textur liefert nur Pinselzug. */
-          float brush=paintBrush(vWP.xz*.00135);
-          float meadowPaint=paintMeadow(vWP.xz*.00215+vec2(.17,.41));
-          float steepPaint=1.0-clamp(abs(vWN.y),0.0,1.0);
-          float stonePaint=paintStone(vWP.xz*.00255+vec2(.63,.11));
-          float warmGround=clamp((diffuseColor.r-diffuseColor.b)*2.2+.15,0.0,1.0);
-          float pathPaint=paintPath(vWP.xz*.00175+vec2(.21,.77));
-          diffuseColor.rgb*=1.0+(brush-.5)*.075;
-          diffuseColor.rgb*=1.0+(meadowPaint-.5)*.045*(1.0-steepPaint);
-          diffuseColor.rgb*=1.0+(stonePaint-.5)*.055*steepPaint;
-          diffuseColor.rgb*=1.0+(pathPaint-.5)*.025*warmGround*(1.0-steepPaint);
+          vec2 cp=vWP.xz*0.00048+vec2(uCloudTime*0.006,-uCloudTime*0.004);
+          float cloud=tNoise(cp*1.7)+tNoise(cp*3.1+vec2(13.2,7.4))*.46;
+          cloud=smoothstep(.68,1.08,cloud)*uCloudAmt;
+          diffuseColor.rgb*=1.0-cloud*.22;
           // Boden-Körnung: zwei überlagerte Rauschfrequenzen auf der bereits
           // handabgestimmten Vertexfarbe statt einer reinen Flächenfarbe —
           // Sand bekommt Korn, Gras Sprenkel, Fels Äderung. Verblasst mit der
@@ -88053,7 +87626,7 @@ function addTerrainSheen(mat){
             vec2 gp=vWP.xz;
             float g1=tNoise(gp*1.35)-0.5;
             float g2=tNoise(gp*6.2+17.0)-0.5;
-            float grain=(g1*0.024+g2*0.016)*distFadeC;
+            float grain=(g1*0.05+g2*0.035)*distFadeC;
             diffuseColor.rgb*=1.0+grain;
 
             /* World-space Triplanar-Detail: Steigung + Höhe wählen weich
@@ -88071,13 +87644,13 @@ function addTerrainSheen(mat){
             float detailD=mix(groundD,rockD,rockM);
             detailD=mix(detailD,screeD,clamp(screeM*.72,0.0,1.0));
             detailD=mix(detailD,sandD,clamp(sandM,0.0,1.0));
-            diffuseColor.rgb*=1.0+(detailD-.5)*.085*distFadeC;
+            diffuseColor.rgb*=1.0+(detailD-.5)*.18*distFadeC;
 
             /* Schichtgestein nur an steilen Wänden. Kleine Phasenstörung
                verhindert perfekte horizontale Linien. */
             float strataWave=.5+.5*sin(vWP.y*.105+tNoise(vWP.xz*.006)*5.2);
             float strata=smoothstep(.34,.82,steep)*smoothstep(.64,.82,strataWave);
-            diffuseColor.rgb*=1.0-strata*.032*distFadeC;
+            diffuseColor.rgb*=1.0-strata*.055*distFadeC;
 
             /* Wasser-Land-Übergang: feuchtes dunkleres Gestein knapp an
                der Wasserlinie, Sand etwas satter. Das FFT-Wasser selbst
@@ -88128,12 +87701,6 @@ function addTerrainSheen(mat){
           float rim=pow(1.0-clamp(dot(vDirN,normal),0.0,1.0),5.0);
           float sunUp=clamp(uRimDir.y*1.4,0.0,1.0);
           gl_FragColor.rgb+=uRimCol*rim*(0.04+uWet*0.07)*(0.35+0.65*sunUp);
-          // Sehr leichter warmer Boden-Bounce und minimale Farbband-Beruhigung
-          // geben den Eindruck bemalter Flaechen, ohne Toon-Shading zu werden.
-          float upness=clamp(normal.y*.5+.5,0.0,1.0);
-          gl_FragColor.rgb+=vec3(.018,.012,.004)*upness*(1.0-uNight);
-          vec3 painted=floor(gl_FragColor.rgb*22.0+.5)/22.0;
-          gl_FragColor.rgb=mix(gl_FragColor.rgb,painted,.055);
           // Nächtliche Grundhelligkeit: additiv statt über hemi/amb, die auf
           // dunklem Geländegrün ohnehin fast nichts ausrichten (Farbe×Licht
           // bleibt dunkel, egal wie stark man die Intensität dreht — siehe
@@ -88148,65 +87715,6 @@ addTerrainSheen(landMat);
 addTerrainSheen(bayLandMat);
 addCascadeShadow(landMat);
 addCascadeShadow(bayLandMat);
-/* Gemeinsamer, sehr billiger Storybook-Farbabschluss fuer alle Terrain-LODs. */
-function addStorybookTerrainGrade(mat,cacheTag){
-  const prev=mat.onBeforeCompile;
-  const prevCacheKey=mat.customProgramCacheKey?mat.customProgramCacheKey.bind(mat):null;
-  mat.onBeforeCompile=function(shader){
-    if(prev)prev.call(mat,shader);
-    shader.uniforms.uStoryLit=storyLitTintU;shader.uniforms.uStoryShadow=storyShadowTintU;
-    shader.uniforms.uStoryGrade=storyGradeU;shader.uniforms.uStorySat=storySaturationU;shader.uniforms.uAfterRain=storyAfterRainU;
-    shader.uniforms.uStoryNight=terrainNightU;
-    shader.vertexShader=shader.vertexShader
-      .replace('#include <common>','#include <common>\nvarying float vStoryWorldY;')
-      .replace('#include <begin_vertex>','#include <begin_vertex>\nvStoryWorldY=(modelMatrix*vec4(transformed,1.0)).y;');
-    shader.fragmentShader=shader.fragmentShader
-      .replace('#include <common>','#include <common>\nvarying float vStoryWorldY;\nuniform vec3 uStoryLit,uStoryShadow;\nuniform float uStoryGrade,uStorySat,uAfterRain,uStoryNight;')
-      .replace('#include <tonemapping_fragment>',`{
-        /* Alles klar unter dem mittleren Meeresspiegel abschneiden. Die
-           Terrain-Dreiecke duerfen weiter bis zum Meeresboden reichen, aber
-           ihre groben Mid/Far-Flanken koennen nicht mehr als dunkle Zaehne
-           durch die transparente Wasseroberflaeche ragen. */
-        if(vStoryWorldY < -0.32) discard;
-        float storyLum=dot(gl_FragColor.rgb,vec3(.299,.587,.114));
-        float storyDay=1.0-uStoryNight;
-        /* Handgemalte Hintergruende behalten Farbe im Schatten. Ein kleiner,
-           farbiger Floor hebt nur die wirklich dunklen Bereiche an und laesst
-           Relief/Sonnenrichtung bestehen. */
-        float storyShadowLift=(1.0-smoothstep(.20,.50,storyLum))*storyDay;
-        gl_FragColor.rgb+=uStoryShadow*storyShadowLift*(.125+.050*uStoryGrade);
-        storyLum=dot(gl_FragColor.rgb,vec3(.299,.587,.114));
-        /* Handgemalte Hintergruende verlieren auch im Gegenlicht nicht ihre
-           lokale Materialfarbe. In dunklen Bereichen darf deshalb ein kleiner
-           Teil der Vertex-Palette direkt wieder sichtbar werden, statt nur
-           graues Ambient-Licht auf bereits schwarzes Lambert-Ergebnis zu legen. */
-        #ifdef USE_COLOR
-          float storyBaseLum=dot(vColor.rgb,vec3(.299,.587,.114));
-          float storyColorRescue=(1.0-smoothstep(.17,.43,storyLum))*storyDay;
-          vec3 storyBasePaint=vColor.rgb*(.78+.18*uStoryLit);
-          gl_FragColor.rgb=mix(gl_FragColor.rgb,storyBasePaint,storyColorRescue*.38);
-          storyLum=dot(gl_FragColor.rgb,vec3(.299,.587,.114));
-        #endif
-        /* Hue-erhaltender Daylight-Floor: Gegenlicht darf dramatisch sein,
-           aber eine Wiese darf nicht zu einer fast schwarzen Flaeche werden. */
-        float storyMinLum=(.108+.040*uStoryGrade)*storyDay;
-        if(storyLum<storyMinLum){
-          vec3 storyHue=clamp(gl_FragColor.rgb/max(storyLum,.022),vec3(.38),vec3(2.25));
-          gl_FragColor.rgb+=storyHue*(storyMinLum-storyLum)*.86;
-        }
-        storyLum=dot(gl_FragColor.rgb,vec3(.299,.587,.114));
-        vec3 storyTint=mix(uStoryShadow,uStoryLit,smoothstep(.16,.76,storyLum));
-        gl_FragColor.rgb=mix(gl_FragColor.rgb,gl_FragColor.rgb*(.80+.31*storyTint),uStoryGrade);
-        float storyGrey=dot(gl_FragColor.rgb,vec3(.299,.587,.114));
-        gl_FragColor.rgb=mix(vec3(storyGrey),gl_FragColor.rgb,uStorySat);
-        float greenMask=clamp((gl_FragColor.g-max(gl_FragColor.r,gl_FragColor.b))*.9+.34,0.0,1.0);
-        gl_FragColor.rgb*=mix(vec3(1.0),vec3(.975,1.045,.985),uAfterRain*greenMask*.72);
-      }
-#include <tonemapping_fragment>`);
-  };
-  mat.customProgramCacheKey=function(){return (prevCacheKey?prevCacheKey():'')+'|storybook-grade-v3-'+cacheTag;};mat.needsUpdate=true;
-}
-addStorybookTerrainGrade(landMat,'near');addStorybookTerrainGrade(bayLandMat,'bay');addStorybookTerrainGrade(landLodMat,'lod');
 
 function islandStreamSway(is,f){
   return Math.sin(f*Math.PI)*(Math.sin(f*7.0+is.streamPhase)*is.r*.012+
@@ -88226,45 +87734,37 @@ function islandStreamCorridor(is,x,z){
   return 1-smoothstep(inner,inner*2.8,Math.abs(across));
 }
 
-const cGrass=new THREE.Color(0x91b65a), cGrassD=new THREE.Color(0x66874a),
+const cGrass=new THREE.Color(0x84a84e), cGrassD=new THREE.Color(0x53773a),
       cField=new THREE.Color(0xafbe66), cDry=new THREE.Color(0xc4b478),
       cRock =new THREE.Color(0xd9cfb4), cRockD=new THREE.Color(0xa2937a),
       cSand =new THREE.Color(0xf1e5c4), cDeepSand=new THREE.Color(0xd3c096),
       cScrub=new THREE.Color(0x6c8a46), cPath=new THREE.Color(0xd6c49c),
       cPeak=new THREE.Color(0xe9e4d4), cSnow=new THREE.Color(0xf6f4ee),
       cScree=new THREE.Color(0xb7a98a),cForestFloor=new THREE.Color(0x365b32),
-      cLush=new THREE.Color(0x568344),cHeath=new THREE.Color(0x81905a),
-      cWetBank=new THREE.Color(0x3d6950),cRiverSoil=new THREE.Color(0x796f55),
-      /* Storybook palette: grosse Farbkomposition statt nur Materialklassen. */
-      cStoryMeadow=new THREE.Color(0xa8c66b),cStorySun=new THREE.Color(0xd0cf83),
-      cStoryForest=new THREE.Color(0x526f50),cStoryForestDeep=new THREE.Color(0x405d45),
-      cStoryMist=new THREE.Color(0x708977),cStoryTerrace=new THREE.Color(0xb08f66),
-      cStoryOlive=new THREE.Color(0x7e8d65),cStoryCoast=new THREE.Color(0xd8c99a),
-      cStoryCool=new THREE.Color(0x78918a),cStoryWarm=new THREE.Color(0xd0b174),
-      cStoryFlowerWash=new THREE.Color(0xd4c985);
-const tmpC=new THREE.Color(),_storyTint=new THREE.Color();
-function landColor(x,z,h,sl,dry,out,is,dx,dz){
+      cLush=new THREE.Color(0x47743b),cHeath=new THREE.Color(0x73834d),
+      cWetBank=new THREE.Color(0x3d6950),cRiverSoil=new THREE.Color(0x796f55);
+const tmpC=new THREE.Color();
+function landColor(x,z,h,sl,dry,out,is){
   const v=fbm2(x*.0045+5,z*.0045+2,3);
   const w=fbm2(x*.013+21,z*.013+9,2);
-  if(h<0.8){ out.copy(cDeepSand).lerp(cStoryCoast,clamp(h/5+.62,0,1)); return out; }
-  if(h<6.5){ out.copy(cStoryCoast).lerp(cStoryMeadow,smoothstep(2.4,7.6,h)); return out; }
+  if(h<0.8){ out.copy(cDeepSand).lerp(cSand,clamp(h/5+.6,0,1)); return out; }
+  if(h<6.5){ out.copy(cSand).lerp(cGrass,smoothstep(2.5,7.5,h)); return out; }
   // Zackige statt rein steigungsgetreue Fels-/Grasgrenze: derselbe
   // Schwellwert wie vorher, nur um ein grobes Rauschen verschoben — echte
   // Grenzen folgen selten exakt der Hangneigung, Bewuchs und Verwitterung
   // sind selbst unregelmäßig.
-  const legacy=is&&is.landscape?0:1;
-  const jag=(fbm2(x*.019+61,z*.019+27,2)-.5)*.20*legacy;
+  const jag=(fbm2(x*.019+61,z*.019+27,2)-.5)*.20;
   const rocky=smoothstep(.32+jag,.76+jag,sl);
-  out.copy(cGrass).lerp(cGrassD,smoothstep(0,.5,sl)*.7+(1-v)*.3*legacy);
-  out.lerp(cScrub,w*(is&&is.landscape?0:.35));
+  out.copy(cGrass).lerp(cGrassD,smoothstep(0,.5,sl)*.7+(1-v)*.3);
+  out.lerp(cScrub,w*.35);
   // Mittelgroße Wiesenflecken — eine engere Frequenz als die Feld-Flecken
   // weiter unten, damit Grünflächen aus der Luft in erkennbare Flicken statt
   // eine einzige gleichförmige Fläche zerfallen.
   const clump=fbm2(x*.0084+133,z*.0084+58,2);
-  if(sl<.4) out.lerp(cField,smoothstep(.58,.86,clump)*(is&&is.landscape?0:.55));
+  if(sl<.4) out.lerp(cField,smoothstep(.58,.86,clump)*.55);
   if(sl<.26&&h<110){
     const f=vnoise2(x*.0030+9,z*.0030+4,11);
-    if(f>.54) out.lerp(cField,smoothstep(.54,.80,f)*(is&&is.landscape?0:.8));
+    if(f>.54) out.lerp(cField,smoothstep(.54,.80,f)*.8);
   }
   out.lerp(cDry,clamp(smoothstep(95,230,h)*.75+(dry-.5)*.55,0,.9));
   // Dieselbe Inselanatomie, die auch die Pflanzen lenkt, zeichnet sich schon
@@ -88274,15 +87774,20 @@ function landColor(x,z,h,sl,dry,out,is,dx,dz){
     /* Grosse Vegetationsmassen muessen schon aus der Luft im Boden lesbar
        sein. Zwei niedrige Frequenzen bilden Waldkerne und offene Lichtungen,
        ohne Geometrie oder Laufzeit-Updates zu benoetigen. */
-    if(!is.landscape){
-      const cover=fbm2(x*.00165+is.seed*.17,z*.00165-is.seed*.11,3);
-      const clear=fbm2(x*.0038+37,z*.0038+81,2);
-      const buildable=(tm&(TM_RUNWAY|TM_SETTLEMENT|TM_PASS|TM_COASTAL))===0;
-      if(buildable&&sl<.48){
-        if(biome===BIOME_WET||biome===BIOME_PINE){const forest=smoothstep(.46,.76,cover)*(1-smoothstep(.73,.91,clear));out.lerp(biome===BIOME_WET?cLush:cForestFloor,forest*.58);}
-        else if(biome===BIOME_CULT){const fields=smoothstep(.43,.72,cover)*(sl<.25?1:.35);out.lerp(fields>.48?cField:cHeath,fields*.34);}
-        else if(biome===BIOME_ALPINE&&h<is.h*.58)out.lerp(cHeath,smoothstep(.50,.78,cover)*.28);
-        else if(biome===BIOME_DRY)out.lerp(cScrub,smoothstep(.60,.82,cover)*.25);
+    const cover=fbm2(x*.00165+is.seed*.17,z*.00165-is.seed*.11,3);
+    const clear=fbm2(x*.0038+37,z*.0038+81,2);
+    const buildable=(tm&(TM_RUNWAY|TM_SETTLEMENT|TM_PASS|TM_COASTAL))===0;
+    if(buildable&&sl<.48){
+      if(biome===BIOME_WET||biome===BIOME_PINE){
+        const forest=smoothstep(.46,.76,cover)*(1-smoothstep(.73,.91,clear));
+        out.lerp(biome===BIOME_WET?cLush:cForestFloor,forest*.58);
+      }else if(biome===BIOME_CULT){
+        const fields=smoothstep(.43,.72,cover)*(sl<.25?1:.35);
+        out.lerp(fields>.48?cField:cHeath,fields*.34);
+      }else if(biome===BIOME_ALPINE&&h<is.h*.58){
+        out.lerp(cHeath,smoothstep(.50,.78,cover)*.28);
+      }else if(biome===BIOME_DRY){
+        out.lerp(cScrub,smoothstep(.60,.82,cover)*.25);
       }
     }
     const river=islandStreamCorridor(is,x,z);
@@ -88296,91 +87801,18 @@ function landColor(x,z,h,sl,dry,out,is,dx,dz){
     else if(biome===BIOME_ALPINE&&h>is.h*.48)out.lerp(cScree,.20);
     else if(biome===BIOME_DRY)out.lerp(cDry,.15);
   }
-  /* ----------------------------------------------------------
-     STORYBOOK COLOR COMPOSITION
-     Dieselben Blueprint-Zonen, die spaeter Pflanzen setzen, malen bereits
-     den Boden. So stimmen Wiesen, Waldmassen, Lichtungen und Terrassen aus
-     3 km Entfernung mit der Nahvegetation ueberein. */
-  if(is&&is.landscape){
-    const L=is.landscape,lf=landscapeFieldsAt(is,x,z,_storyFields,h,sl);
-    const flat=1-smoothstep(.20,.55,sl),rockKeep=1-smoothstep(.34,.72,sl);
-    const meadow=lf.meadow*flat*rockKeep;
-    const forest=Math.max(lf.forest,lf.grove*.66)*rockKeep;
-    out.lerp(cStoryMeadow,meadow*.44);
-    out.lerp(cStoryForestDeep,forest*.29);
-    // Lichtungen sind nicht einfach "weniger Wald", sondern bewusst hellere
-    // negative Flaechen, damit der Wald aus der Luft rhythmisch lesbar wird.
-    out.lerp(cStorySun,lf.clear*flat*.30);
-    out.lerp(cStoryFlowerWash,lf.flower*flat*.12);
-    out.lerp(cStoryMist,lf.wet*flat*.24);
-    out.lerp(cStoryTerrace,lf.terrace*flat*.18);
-    out.lerp(cPath,lf.path*flat*.52);
-    /* Scenic Ridges sind aus der Luft bewusst lesbare Sonnenkämme. Sie
-       bleiben heller/offener und bilden lange ruhige Linien statt weiterer
-       kleinteiliger Noise-Flecken. */
-    out.lerp(cStorySun,lf.ridge*flat*(.08+.08*L.poetry));
-    // Primärstil verschiebt nur die Harmonie, nicht die Materialklasse.
-    if(L.primaryBiome===STORY_MEADOW)out.lerp(cStoryMeadow,.055*flat);
-    else if(L.primaryBiome===STORY_FOREST)out.lerp(cStoryForest,.055*rockKeep);
-    else if(L.primaryBiome===STORY_ORCHARD)out.lerp(cStoryOlive,.050*flat);
-    else if(L.primaryBiome===STORY_MIST)out.lerp(cStoryMist,.060*flat);
-    else if(L.primaryBiome===STORY_COAST)out.lerp(cStoryCoast,.045*(lf.coast+.25)*flat);
-    else if(L.primaryBiome===STORY_HERO){out.lerp(cStorySun,.050*flat);out.lerp(cStoryWarm,lf.ridge*.025*flat);}
-    /* Der Sekundärstil ist nur eine 2–3-%-Farbdrift. So können z.B. eine
-       Sonnenwiese und ein kühler Waldsaum dieselbe Insel prägen, ohne dass
-       Materialgrenzen wie Biome-Kacheln erscheinen. */
-    if(L.secondaryBiome!==L.primaryBiome){
-      if(L.secondaryBiome===STORY_MEADOW)out.lerp(cStoryMeadow,.024*flat);
-      else if(L.secondaryBiome===STORY_FOREST)out.lerp(cStoryForest,.024*rockKeep);
-      else if(L.secondaryBiome===STORY_ORCHARD)out.lerp(cStoryOlive,.022*flat);
-      else if(L.secondaryBiome===STORY_MIST)out.lerp(cStoryMist,.026*flat);
-      else if(L.secondaryBiome===STORY_COAST)out.lerp(cStoryCoast,.022*(lf.coast+.18)*flat);
-      else if(L.secondaryBiome===STORY_HERO)out.lerp(cStoryWarm,.018*flat);
-    }
-    // Windoffene Kuesten werden etwas heller/trockener, geschuetzte Senken
-    // bleiben gruener. Das ist Farbdramaturgie, kein neuer Gameplaywert.
-    if(lf.wind>.18&&h<125)out.lerp(cDry,lf.wind*.075*flat);
-    // Shore Glow -> Transition -> Meadow/Cliff Edge: drei getrennte
-    // Kuestenbaender, die wie ein gemalter Rand ineinander greifen.
-    if(h<36){
-      out.lerp(cStoryCoast,lf.shoreGlow*.22*(1-smoothstep(.18,.52,sl)));
-      out.lerp(cSand,lf.coastTransition*.10*(1-smoothstep(.28,.58,sl)));
-      out.lerp(sl>.34?cRock:cStoryMeadow,lf.coastEdge*.075);
-    }
-
-    /* Sehr grosse "Gouache-Washes". Die Frequenz ist absichtlich hunderte
-       Meter gross, damit sie wie gemalte Farbflaechen und nicht wie Noise
-       aussehen. */
-    const wash=fbm2(x*.00072+is.seed*.031,z*.00072-is.seed*.019,2);
-    const wash2=fbm2(x*.00145+71,z*.00145+19,2);
-    const mood=is.landscape.colorMood||0;
-    if(wash>.54)out.lerp(cStoryWarm,smoothstep(.54,.88,wash)*(.055+mood*.08));
-    else out.lerp(cStoryCool,smoothstep(.54,.86,1-wash)*(.035-mood*.05));
-    out.offsetHSL(0,0,(wash2-.5)*.022);
-
-    /* Malerische Sonnenexposition. dx/dz sind die lokalen Hoehengradienten;
-       Schattenseiten bleiben farbig und werden nur leicht kuehler, statt
-       physikalisch ins Schwarze zu fallen. */
-    if(dx!==undefined&&dz!==undefined){
-      const inv=1/Math.sqrt(dx*dx+dz*dz+1),nx=-dx*inv,ny=inv,nz=-dz*inv;
-      const sunDot=clamp(nx*sunDir.x+ny*sunDir.y+nz*sunDir.z,-1,1);
-      const exposed=.5+.5*sunDot+is.landscape.sunBias;
-      if(exposed>.55)out.lerp(cStoryWarm,smoothstep(.55,1.05,exposed)*.055);
-      else out.lerp(cStoryCool,smoothstep(.55,.05,exposed)*.045);
-    }
-  }
   // Geröll/Trockenboden auf mittlerer Steigung — bisher sprang die Farbe an
   // dieser Stelle direkt von Gras auf blanken Fels, ganz ohne Übergangston.
   const scree=smoothstep(.18+jag,.34+jag,sl)*(1-smoothstep(.40+jag,.60+jag,sl));
   out.lerp(cScree,scree*.6);
   out.lerp(rocky>.55?cRockD:cRock,rocky*.92);
-  if(sl<.42&&h>9&&!is?.landscape){
+  if(sl<.42&&h>9){
     const pth=Math.abs(fbm2(x*.0022+77,z*.0022+31,2)-.5);
     if(pth<.016) out.lerp(cPath,(1-pth/.016)*.75);
   }
   out.lerp(cPeak,smoothstep(300,620,h)*.9);
   out.lerp(cSnow,smoothstep(700,1000,h)*(.55+(1-sl)*.45));
-  out.offsetHSL(0,0,(v-.5)*(is&&is.landscape?0:.06));
+  out.offsetHSL(0,0,(v-.5)*.06);
   return out;
 }
 
@@ -88409,69 +87841,98 @@ function wrappedWorldCell(residue,center,n){
   if(d>n*.5)d-=n;else if(d<=-n*.5)d+=n;
   return center+d;
 }
-let grassMesh=null,grassMeshes=null, grassNext=0, grassOn=false, grassSlots=null;
+let grassMesh=null, grassNext=0, grassOn=false, grassSlots=null;
 const _gm4=new THREE.Matrix4(), _gq4=new THREE.Quaternion(), _gs4=new THREE.Vector3(),
       _gp4=new THREE.Vector3(), _gc4=new THREE.Color();
-function setGrassSlotHidden(i,family,dirty){
-  if(!grassMeshes||!family||!grassMeshes[family])return;
-  _gm4.compose(_gp4.set(0,-9999,0),_gq4.identity(),_gs4.set(0,0,0));
-  grassMeshes[family].setMatrixAt(i,_gm4);dirty&&dirty.add(family);
-}
 function buildGrass(){
-  grassMeshes={};
-  for(const family of STORY_GRASS_FAMILIES){
-    const m=new THREE.InstancedMesh(G('grass_'+family,()=>buildGrassFamilyGeo(family)),grassMat,GRASS_N);
-    m.instanceMatrix.setUsage(THREE.DynamicDrawUsage);m.frustumCulled=false;m.castShadow=false;m.receiveShadow=false;m.visible=false;
-    grassMeshes[family]=m;scene.add(m);
-  }
-  grassMesh=grassMeshes.short; // legacy/debug alias
+  grassMesh=new THREE.InstancedMesh(buildGrassGeo(),grassMat,GRASS_N);
+  grassMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  grassMesh.frustumCulled=false; grassMesh.castShadow=false; grassMesh.receiveShadow=false;
   grassSlots=new Array(GRASS_N);
   for(let i=0;i<GRASS_N;i++){
-    grassSlots[i]={gx:2147483647,gz:2147483647,rev:-1,valid:false,family:null};
-    for(const family of STORY_GRASS_FAMILIES){
-      _gm4.compose(_gp4.set(0,-9999,0),_gq4.identity(),_gs4.set(0,0,0));grassMeshes[family].setMatrixAt(i,_gm4);grassMeshes[family].setColorAt(i,_gc4.set(0xffffff));
-    }
+    grassSlots[i]={gx:2147483647,gz:2147483647,rev:-1,valid:false};
+    _gm4.compose(_gp4.set(0,-9999,0),_gq4.identity(),_gs4.set(0,0,0));
+    grassMesh.setMatrixAt(i,_gm4);
+    grassMesh.setColorAt(i,_gc4.set(0xffffff));
   }
-  for(const family of STORY_GRASS_FAMILIES){grassMeshes[family].instanceColor.needsUpdate=true;grassMeshes[family].instanceMatrix.needsUpdate=true;}
+  grassMesh.instanceColor.needsUpdate=true;
+  grassMesh.instanceMatrix.needsUpdate=true;
+  grassMesh.visible=false;
+  scene.add(grassMesh);
 }
 function updateGrass(dt,T,px,pz,agl){
-  if(!grassMeshes)return;
-  grassMat.userData.uTime.value=T;grassOn=agl<95&&agl>-30;
-  for(const family of STORY_GRASS_FAMILIES)grassMeshes[family].visible=grassOn;
+  if(!grassMesh)return;
+  grassMat.userData.uTime.value=T;
+  grassOn=agl<95&&agl>-30;
+  grassMesh.visible=grassOn;
   if(!grassOn)return;
-  const batch=100,cgx=Math.floor(px/GRASS_STEP_X),cgz=Math.floor(pz/GRASS_STEP_Z),density=nearVegDensity(),dirty=new Set(),colorDirty=new Set();
+  const batch=100;
+  const cgx=Math.floor(px/GRASS_STEP_X),cgz=Math.floor(pz/GRASS_STEP_Z);
+  const density=nearVegDensity();
+  let touched=false;
   for(let k=0;k<batch;k++){
-    const i=grassNext;grassNext=(grassNext+1)%GRASS_N;const slot=grassSlots[i];
-    const cell=i>>1,layer=i&1,rx=cell%GRASS_GRID_X,rz=(cell/GRASS_GRID_X)|0,gx=wrappedWorldCell(rx,cgx,GRASS_GRID_X),gz=wrappedWorldCell(rz,cgz,GRASS_GRID_Z);
+    const i=grassNext; grassNext=(grassNext+1)%GRASS_N;
+    const slot=grassSlots[i];
+    // Schon gültige, noch nahe Halme bleiben stehen — kein Neuwürfeln, das
+    // war der Bug: vorher wurde jeder Halm bei jeder Runde neu ausgewürfelt
+    // und damit im Schnitt genauso oft wieder verworfen, die Wiese blieb
+    // dauerhaft licht statt sich zu füllen.
+    const cell=i>>1,layer=i&1,rx=cell%GRASS_GRID_X,rz=(cell/GRASS_GRID_X)|0;
+    const gx=wrappedWorldCell(rx,cgx,GRASS_GRID_X);
+    const gz=wrappedWorldCell(rz,cgz,GRASS_GRID_Z);
     if(slot.gx===gx&&slot.gz===gz&&slot.rev===nearVegRevision)continue;
-    if(slot.family)setGrassSlotHidden(i,slot.family,dirty);
-    slot.gx=gx;slot.gz=gz;slot.rev=nearVegRevision;slot.valid=false;slot.family=null;
-    if(ihash(gx,gz,7011+layer*97)>density)continue;
-    const x=(gx+.5+(ihash(gx,gz,7103+layer*131)-.5)*.74)*GRASS_STEP_X,z=(gz+.5+(ihash(gx,gz,7207+layer*149)-.5)*.74)*GRASS_STEP_Z,h=heightAt(x,z);
-    const grassIs=hOwner,grassBiome=grassIs?islandBiome(grassIs):null,grassField=grassIs?landscapeFieldsAt(grassIs,x,z):null;
-    let ok=h>7&&h<105,sl=0;
-    if(ok&&grassIs&&grassIs.stream){const rec=live.get(grassIs.key);ok=rec&&rec.streamPath?!streamBlocked(rec,x-grassIs.cx,z-grassIs.cz,5):islandStreamCorridor(grassIs,x,z)<.42;}
-    if(ok){sl=slopeAt(x,z,h);ok=sl<.34;}
-    if(ok)ok=grassField?grassField.path<.30:Math.abs(fbm2(x*.0022+77,z*.0022+31,2)-.5)>.02;
-    if(ok)ok=!runwayUnder(x,z,10);
-    if(ok&&grassField){const meadowChance=clamp(.30+grassField.meadow*.62+grassField.wet*.16+grassField.terrace*.12+grassField.ridge*.20-grassField.forest*.52,0.08,1);ok=ihash(gx,gz,8069+layer*241)<meadowChance;}
-    if(ok&&(grassBiome===BIOME_DRY||grassBiome===BIOME_VOLCANIC))ok=vnoise2(x*.0061+31,z*.0061+17,23)>.57;
-    if(!ok)continue;
-    slot.valid=true;const family=storyGrassFamily(grassIs,grassBiome,grassField);slot.family=family;const mesh=grassMeshes[family];
-    const sc=.75+ihash(gx,gz,7309+layer*163)*.55;_gq4.setFromAxisAngle(_gUP,ihash(gx,gz,7411+layer*181)*TAU);
-    let fy=1;if(family==='tall')fy=1.08;else if(family==='wet')fy=1.12;else if(family==='wind')fy=.94;else if(family==='coastal')fy=.88;else if(family==='dry')fy=.92;
-    const meadowY=grassField?(.92+grassField.meadow*.14+grassField.wet*.10-grassField.wind*.08):1;
-    _gs4.set(sc,sc*(.88+ihash(gx,gz,7517+layer*193)*.22)*meadowY*fy,sc);_gp4.set(x,h,z);_gm4.compose(_gp4,_gq4,_gs4);mesh.setMatrixAt(i,_gm4);dirty.add(family);
-    if(family==='dry')_gc4.copy(cDry).lerp(cScrub,.18+ihash(gx,gz,7613+layer*211)*.32);
-    else if(family==='coastal')_gc4.copy(cStoryOlive).lerp(cGrass,.22+ihash(gx,gz,7703+layer*223)*.22);
-    else if(family==='wet')_gc4.copy(cGrassD).lerp(cStoryMist,.16+ihash(gx,gz,7907+layer*233)*.16);
-    else if(family==='wind')_gc4.copy(cStoryOlive).lerp(cGrassD,.28+ihash(gx,gz,7817+layer*227)*.20);
-    else if(family==='tall')_gc4.copy(cGrass).lerp(cStoryMeadow,.26+ihash(gx,gz,8011+layer*239)*.28);
-    else _gc4.copy(cGrassD).lerp(cGrass,.50+ihash(gx,gz,8011+layer*239)*.34);
-    if(grassField){_gc4.lerp(cStoryMeadow,grassField.meadow*.14);_gc4.lerp(cStoryMist,grassField.wet*.12);_gc4.lerp(cDry,grassField.wind*.07);}
-    mesh.setColorAt(i,_gc4);colorDirty.add(family);
+    touched=true;
+    slot.gx=gx;slot.gz=gz;slot.rev=nearVegRevision;
+    // Niedrige Qualitaet verwirft Zellen vor den teuren GelÃ¤ndeabfragen.
+    if(ihash(gx,gz,7011+layer*97)>density){
+      slot.valid=false;
+      _gm4.compose(_gp4.set(0,-9999,0),_gq4.identity(),_gs4.set(0,0,0));
+      grassMesh.setMatrixAt(i,_gm4);continue;
+    }
+    const x=(gx+.5+(ihash(gx,gz,7103+layer*131)-.5)*.74)*GRASS_STEP_X;
+    const z=(gz+.5+(ihash(gx,gz,7207+layer*149)-.5)*.74)*GRASS_STEP_Z;
+    const h=heightAt(x,z);
+    const grassIs=hOwner, grassBiome=grassIs?islandBiome(grassIs):null;
+    let ok=h>7&&h<105;
+    if(ok&&grassIs&&grassIs.stream){
+      const rec=live.get(grassIs.key);
+      ok=rec&&rec.streamPath
+        ?!streamBlocked(rec,x-grassIs.cx,z-grassIs.cz,5)
+        :islandStreamCorridor(grassIs,x,z)<.42;
+    }
+    if(ok) ok=slopeAt(x,z,h)<.34;
+    if(ok){
+      const pth=Math.abs(fbm2(x*.0022+77,z*.0022+31,2)-.5);
+      ok=pth>.02;
+    }
+    if(ok) ok=!runwayUnder(x,z,10);
+    if(ok&&(grassBiome===BIOME_DRY||grassBiome===BIOME_VOLCANIC))
+      ok=vnoise2(x*.0061+31,z*.0061+17,23)>.57;
+    if(!ok){
+      slot.valid=false;
+      _gm4.compose(_gp4.set(0,-9999,0),_gq4.identity(),_gs4.set(0,0,0));
+      grassMesh.setMatrixAt(i,_gm4);
+      continue;
+    }
+    slot.valid=true;
+    const sc=.75+ihash(gx,gz,7309+layer*163)*.55;
+    _gq4.setFromAxisAngle(_gUP,ihash(gx,gz,7411+layer*181)*TAU);
+    _gs4.set(sc,sc*(.85+ihash(gx,gz,7517+layer*193)*.3),sc);
+    _gp4.set(x,h,z);
+    _gm4.compose(_gp4,_gq4,_gs4);
+    grassMesh.setMatrixAt(i,_gm4);
+    if(grassBiome===BIOME_DRY||grassBiome===BIOME_VOLCANIC)
+      _gc4.copy(cDry).lerp(cScrub,.18+ihash(gx,gz,7613+layer*211)*.32);
+    else if(grassBiome===BIOME_ATOLL)_gc4.copy(cField).lerp(cGrass,.38+ihash(gx,gz,7703+layer*223)*.28);
+    else if(grassBiome===BIOME_ALPINE)_gc4.copy(cScrub).lerp(cGrassD,.30+ihash(gx,gz,7817+layer*227)*.35);
+    else if(grassBiome===BIOME_WET)_gc4.copy(cGrassD).lerp(cGrass,.72+ihash(gx,gz,7907+layer*233)*.28);
+    else _gc4.copy(cGrassD).lerp(cGrass,.55+ihash(gx,gz,8011+layer*239)*.45);
+    grassMesh.setColorAt(i,_gc4);
   }
-  for(const f of dirty)grassMeshes[f].instanceMatrix.needsUpdate=true;for(const f of colorDirty)grassMeshes[f].instanceColor.needsUpdate=true;
+  if(touched){
+    grassMesh.instanceMatrix.needsUpdate=true;
+    grassMesh.instanceColor.needsUpdate=true;
+  }
 }
 const _gUP=new THREE.Vector3(0,1,0);
 /* Wildblumen: dieselbe Nähe-Streaming-Technik wie beim Gras oben, aber
@@ -88479,79 +87940,95 @@ const _gUP=new THREE.Vector3(0,1,0);
    landColor() für die Wiesen-Einfärbung nutzt — Blüten tauchen so genau
    dort auf, wo das Terrain ohnehin schon als Wiese eingefärbt ist. */
 const FLOWER_N=900, FLOWER_GRID=30, FLOWER_STEP=5.15;
-let flowerMesh=null,flowerMeshes=null, flowerNext=0, flowerOn=false, flowerSlots=null;
-function setFlowerSlotHidden(i,family,dirty){if(!flowerMeshes||!family||!flowerMeshes[family])return;_gm4.compose(_gp4.set(0,-9999,0),_gq4.identity(),_gs4.set(0,0,0));flowerMeshes[family].setMatrixAt(i,_gm4);dirty&&dirty.add(family);}
+let flowerMesh=null, flowerNext=0, flowerOn=false, flowerSlots=null;
+const FLOWER_HUES=[0.14,0.98,0.78,0.02];   // gelb, rosa-rot, violett, orange-rot
 function buildFlowers(){
-  flowerMeshes={};for(const family of STORY_FLOWER_FAMILIES){const m=new THREE.InstancedMesh(G('flower_'+family,()=>storyFlowerGeo(family)),vegMat,FLOWER_N);m.instanceMatrix.setUsage(THREE.DynamicDrawUsage);m.frustumCulled=false;m.castShadow=false;m.receiveShadow=false;m.visible=false;flowerMeshes[family]=m;scene.add(m);}
-  flowerMesh=flowerMeshes.creamDaisy;flowerSlots=new Array(FLOWER_N);
-  for(let i=0;i<FLOWER_N;i++){flowerSlots[i]={gx:2147483647,gz:2147483647,rev:-1,valid:false,family:null};for(const family of STORY_FLOWER_FAMILIES){_gm4.compose(_gp4.set(0,-9999,0),_gq4.identity(),_gs4.set(0,0,0));flowerMeshes[family].setMatrixAt(i,_gm4);flowerMeshes[family].setColorAt(i,_gc4.set(0xffffff));}}
-  for(const family of STORY_FLOWER_FAMILIES){flowerMeshes[family].instanceColor.needsUpdate=true;flowerMeshes[family].instanceMatrix.needsUpdate=true;}
+  flowerMesh=new THREE.InstancedMesh(G('flower',wildflowerGeo),vegMat,FLOWER_N);
+  flowerMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  flowerMesh.frustumCulled=false; flowerMesh.castShadow=false; flowerMesh.receiveShadow=false;
+  flowerSlots=new Array(FLOWER_N);
+  for(let i=0;i<FLOWER_N;i++){
+    flowerSlots[i]={gx:2147483647,gz:2147483647,rev:-1,valid:false};
+    _gm4.compose(_gp4.set(0,-9999,0),_gq4.identity(),_gs4.set(0,0,0));
+    flowerMesh.setMatrixAt(i,_gm4);
+    flowerMesh.setColorAt(i,_gc4.set(0xffffff));
+  }
+  flowerMesh.instanceColor.needsUpdate=true;
+  flowerMesh.instanceMatrix.needsUpdate=true;
+  flowerMesh.visible=false;
+  scene.add(flowerMesh);
 }
 function updateFlowers(dt,px,pz,agl){
-  if(!flowerMeshes)return;flowerOn=agl<95&&agl>-30;for(const family of STORY_FLOWER_FAMILIES)flowerMeshes[family].visible=flowerOn;if(!flowerOn)return;
-  const batch=24,cgx=Math.floor(px/FLOWER_STEP),cgz=Math.floor(pz/FLOWER_STEP),density=nearVegDensity(),dirty=new Set(),colorDirty=new Set();
+  if(!flowerMesh)return;
+  flowerOn=agl<95&&agl>-30;
+  flowerMesh.visible=flowerOn;
+  if(!flowerOn)return;
+  const batch=24;
+  const cgx=Math.floor(px/FLOWER_STEP),cgz=Math.floor(pz/FLOWER_STEP);
+  const density=nearVegDensity();
+  let touched=false;
   for(let k=0;k<batch;k++){
-    const i=flowerNext;flowerNext=(flowerNext+1)%FLOWER_N;const slot=flowerSlots[i],rx=i%FLOWER_GRID,rz=(i/FLOWER_GRID)|0,gx=wrappedWorldCell(rx,cgx,FLOWER_GRID),gz=wrappedWorldCell(rz,cgz,FLOWER_GRID);
-    if(slot.gx===gx&&slot.gz===gz&&slot.rev===nearVegRevision)continue;if(slot.family)setFlowerSlotHidden(i,slot.family,dirty);
-    slot.gx=gx;slot.gz=gz;slot.rev=nearVegRevision;slot.valid=false;slot.family=null;if(ihash(gx,gz,9013)>density)continue;
-    const x=(gx+.5+(ihash(gx,gz,9103)-.5)*.72)*FLOWER_STEP,z=(gz+.5+(ihash(gx,gz,9209)-.5)*.72)*FLOWER_STEP,h=heightAt(x,z),flowerIs=hOwner,flowerBiome=flowerIs?islandBiome(flowerIs):null,flowerField=flowerIs?landscapeFieldsAt(flowerIs,x,z):null;
-    let ok=h>8&&h<95,sl=0;if(ok&&flowerIs&&flowerIs.stream){const rec=live.get(flowerIs.key);ok=rec&&rec.streamPath?!streamBlocked(rec,x-flowerIs.cx,z-flowerIs.cz,8):islandStreamCorridor(flowerIs,x,z)<.30;}
-    if(ok){sl=slopeAt(x,z,h);ok=sl<.26;}if(ok)ok=flowerField?flowerField.path<.25:Math.abs(fbm2(x*.0022+77,z*.0022+31,2)-.5)>.025;
-    if(ok){const patch=flowerField?flowerField.flower:0,meadow=flowerField?flowerField.meadow:.25,chance=(flowerBiome===BIOME_WET?.17:(flowerBiome===BIOME_CULT?.15:.095))*clamp(.08+patch*4.6+meadow*.18,0,1.75);ok=patch>.10&&ihash(gx,gz,9311)<chance;}
-    if(ok&&(flowerBiome===BIOME_DRY||flowerBiome===BIOME_VOLCANIC))ok=false;if(ok)ok=!runwayUnder(x,z,10);if(!ok)continue;
-    slot.valid=true;const family=storyFlowerFamily(gx,gz,flowerField);slot.family=family;const mesh=flowerMeshes[family],sc=(.72+ihash(gx,gz,9413)*.58)*(flowerField?(.90+flowerField.flower*.18):1);
-    _gq4.setFromAxisAngle(_gUP,ihash(gx,gz,9511)*TAU);_gs4.set(sc,sc,sc);_gp4.set(x,h,z);_gm4.compose(_gp4,_gq4,_gs4);mesh.setMatrixAt(i,_gm4);dirty.add(family);
-    const tint={creamDaisy:0xf4ead5,yellowStar:0xe8cf71,pinkBell:0xdba2b4,blueCup:0xa7badb,mixedSpray:0xe4d0bd}[family];_gc4.setHex(tint);_gc4.offsetHSL((ihash(gx,gz,9719)-.5)*.012,0,(ihash(gx,gz,9811)-.5)*.06);mesh.setColorAt(i,_gc4);colorDirty.add(family);
-  }
-  for(const f of dirty)flowerMeshes[f].instanceMatrix.needsUpdate=true;for(const f of colorDirty)flowerMeshes[f].instanceColor.needsUpdate=true;
-}
-
-/* ------------------------------------------------------------
-   STORYBOOK MEADOW LIFE
-   Sehr wenige, helle Schmetterlings-/Samenpunkte nur ueber geplanten
-   Wiesen und Blueteninseln. 40 Instanzen sind billig genug, um ihre
-   Matrizen pro Frame weich im Wind zu bewegen; oberhalb Tiefflughoehe ist
-   die Gruppe komplett unsichtbar.
-   ------------------------------------------------------------ */
-const MEADOW_MOTE_N=40,MEADOW_MOTE_STEP=11;
-let meadowMoteMesh=null,meadowMoteSlots=null;
-const meadowMoteMat=new THREE.MeshBasicMaterial({vertexColors:true,side:THREE.DoubleSide,transparent:true,opacity:.76,depthWrite:false,fog:true});
-function storybookMoteGeo(){
-  const g=new THREE.BufferGeometry();
-  g.setAttribute('position',new THREE.Float32BufferAttribute([
-    0,0,0, -.24,.07,0, -.05,.20,0,
-    0,0,0,  .24,.07,0,  .05,.20,0
-  ],3));g.computeVertexNormals();return g;
-}
-function buildMeadowMotes(){
-  meadowMoteMesh=new THREE.InstancedMesh(G('storybookMote',storybookMoteGeo),meadowMoteMat,MEADOW_MOTE_N);
-  meadowMoteMesh.frustumCulled=false;meadowMoteMesh.castShadow=false;meadowMoteMesh.receiveShadow=false;
-  meadowMoteMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage);meadowMoteSlots=[];
-  for(let i=0;i<MEADOW_MOTE_N;i++){
-    meadowMoteSlots.push({gx:2147483647,gz:2147483647,x:0,y:-9999,z:0,valid:false,phase:i*.73});
-    _gm4.compose(_gp4.set(0,-9999,0),_gq4.identity(),_gs4.set(0,0,0));meadowMoteMesh.setMatrixAt(i,_gm4);
-    meadowMoteMesh.setColorAt(i,_gc4.setHSL(i%3===0?.13:(i%3===1?.96:.58),.34,.76));
-  }
-  meadowMoteMesh.instanceColor.needsUpdate=true;meadowMoteMesh.instanceMatrix.needsUpdate=true;meadowMoteMesh.visible=false;scene.add(meadowMoteMesh);
-}
-function updateMeadowMotes(T,px,pz,agl){
-  if(!meadowMoteMesh)return;const on=agl>-8&&agl<62;meadowMoteMesh.visible=on;if(!on)return;
-  const cgx=Math.floor(px/MEADOW_MOTE_STEP),cgz=Math.floor(pz/MEADOW_MOTE_STEP);
-  for(let i=0;i<MEADOW_MOTE_N;i++){
-    const s=meadowMoteSlots[i],rx=i%8,rz=(i/8)|0,gx=wrappedWorldCell(rx,cgx,8),gz=wrappedWorldCell(rz,cgz,5);
-    if(s.gx!==gx||s.gz!==gz){
-      s.gx=gx;s.gz=gz;const x=(gx+.5+(ihash(gx,gz,12101)-.5)*.76)*MEADOW_MOTE_STEP,z=(gz+.5+(ihash(gx,gz,12107)-.5)*.76)*MEADOW_MOTE_STEP,h=heightAt(x,z),is=hOwner;
-      let ok=!!is&&h>8&&h<105&&!runwayUnder(x,z,12);
-      if(ok){const f=landscapeFieldsAt(is,x,z);ok=(f.flower>.14||f.meadow>.62)&&f.forest<.55&&slopeAt(x,z,h)<.28;}
-      s.valid=ok;s.x=x;s.z=z;s.y=h+1.0+ihash(gx,gz,12113)*1.5;s.phase=ihash(gx,gz,12119)*TAU;
+    const i=flowerNext; flowerNext=(flowerNext+1)%FLOWER_N;
+    const slot=flowerSlots[i];
+    const rx=i%FLOWER_GRID,rz=(i/FLOWER_GRID)|0;
+    const gx=wrappedWorldCell(rx,cgx,FLOWER_GRID);
+    const gz=wrappedWorldCell(rz,cgz,FLOWER_GRID);
+    if(slot.gx===gx&&slot.gz===gz&&slot.rev===nearVegRevision)continue;
+    touched=true;
+    slot.gx=gx;slot.gz=gz;slot.rev=nearVegRevision;
+    if(ihash(gx,gz,9013)>density){
+      slot.valid=false;
+      _gm4.compose(_gp4.set(0,-9999,0),_gq4.identity(),_gs4.set(0,0,0));
+      flowerMesh.setMatrixAt(i,_gm4);continue;
     }
-    if(!s.valid){_gm4.compose(_gp4.set(0,-9999,0),_gq4.identity(),_gs4.set(0,0,0));meadowMoteMesh.setMatrixAt(i,_gm4);continue;}
-    const flutter=Math.sin(T*(2.1+(i%5)*.17)+s.phase),drift=Math.sin(T*.47+s.phase*1.7);
-    _gp4.set(s.x+drift*.32,s.y+flutter*.22,s.z+Math.cos(T*.41+s.phase)*.26);
-    _e4.set(flutter*.22,T*.32+s.phase,drift*.16);_gq4.setFromEuler(_e4);
-    const sc=.72+.18*Math.sin(T*5.3+s.phase);_gs4.set(sc,sc,sc);_gm4.compose(_gp4,_gq4,_gs4);meadowMoteMesh.setMatrixAt(i,_gm4);
+    const x=(gx+.5+(ihash(gx,gz,9103)-.5)*.72)*FLOWER_STEP;
+    const z=(gz+.5+(ihash(gx,gz,9209)-.5)*.72)*FLOWER_STEP;
+    const h=heightAt(x,z);
+    const flowerIs=hOwner, flowerBiome=flowerIs?islandBiome(flowerIs):null;
+    let ok=h>8&&h<95;
+    if(ok&&flowerIs&&flowerIs.stream){
+      const rec=live.get(flowerIs.key);
+      ok=rec&&rec.streamPath
+        ?!streamBlocked(rec,x-flowerIs.cx,z-flowerIs.cz,8)
+        :islandStreamCorridor(flowerIs,x,z)<.30;
+    }
+    if(ok) ok=slopeAt(x,z,h)<.26;
+    if(ok){
+      const pth=Math.abs(fbm2(x*.0022+77,z*.0022+31,2)-.5);
+      ok=pth>.025;
+    }
+    if(ok){
+      // an dieselben "Feld"-Flecken gekoppelt wie landColor()s Wiesenfärbung,
+      // dazu ein eigener Streuwert — macht Blüten insgesamt spärlich statt
+      // die ganze Wiese vollzupflastern.
+      const f=vnoise2(x*.0030+9,z*.0030+4,11);
+      const chance=flowerBiome===BIOME_WET?.18:(flowerBiome===BIOME_CULT?.14:.10);
+      ok=f>.50&&ihash(gx,gz,9311)<chance;
+    }
+    if(ok&&(flowerBiome===BIOME_DRY||flowerBiome===BIOME_VOLCANIC))ok=false;
+    if(ok) ok=!runwayUnder(x,z,10);
+    if(!ok){
+      slot.valid=false;
+      _gm4.compose(_gp4.set(0,-9999,0),_gq4.identity(),_gs4.set(0,0,0));
+      flowerMesh.setMatrixAt(i,_gm4);
+      continue;
+    }
+    slot.valid=true;
+    const sc=.8+ihash(gx,gz,9413)*.7;
+    _gq4.setFromAxisAngle(_gUP,ihash(gx,gz,9511)*TAU);
+    _gs4.set(sc,sc,sc);
+    _gp4.set(x,h,z);
+    _gm4.compose(_gp4,_gq4,_gs4);
+    flowerMesh.setMatrixAt(i,_gm4);
+    const hue=FLOWER_HUES[(ihash(gx,gz,9613)*FLOWER_HUES.length)|0];
+    _gc4.setHSL(hue+(ihash(gx,gz,9719)-.5)*.03,
+      .55+ihash(gx,gz,9811)*.35,.55+ihash(gx,gz,9901)*.20);
+    flowerMesh.setColorAt(i,_gc4);
   }
-  meadowMoteMesh.instanceMatrix.needsUpdate=true;
+  if(touched){
+    flowerMesh.instanceMatrix.needsUpdate=true;
+    flowerMesh.instanceColor.needsUpdate=true;
+  }
 }
 
 /* ---------- Bausteine, einmal erzeugt und überall benutzt ---------- */
@@ -88801,31 +88278,6 @@ function reedClumpGeo(){
    erst über die Instanzfarbe (siehe updateFlowers) ihren eigentlichen Ton
    bekommt — dieselbe Technik wie beim Gras, nur mit einem hellen statt
    grünen Zielfarbraum. */
-const STORY_FLOWER_FAMILIES=['creamDaisy','yellowStar','pinkBell','blueCup','mixedSpray'];
-function storyFlowerFamily(gx,gz,f){
-  const n=(ihash(gx,gz,9601)*5)|0;
-  if(f&&f.wet>.45)return n&1?'blueCup':'creamDaisy';
-  return STORY_FLOWER_FAMILIES[n];
-}
-function storyFlowerGeo(kind){
-  const p=[];function stem(x,h,z){let g=new THREE.CylinderGeometry(.018,.028,h,4);g.translate(x,h*.5,z);p.push(geoCol(g,0x4d7139));return h;}
-  if(kind==='mixedSpray'){
-    for(let k=-1;k<=1;k++){const h=.46+(k+1)*.08,x=k*.16;stem(x,h,0);let b=new THREE.SphereGeometry(.075,5,4);b.scale(1,.68,1);b.translate(x,h,0);p.push(geoCol(b,k<0?0xf1dfb2:(k>0?0xb8c9e6:0xe9b8c5)));}
-  }else{
-    const h=kind==='pinkBell'?.68:(kind==='blueCup'?.60:.56);stem(0,h,0);
-    const col=kind==='creamDaisy'?0xf2ead5:(kind==='yellowStar'?0xe8cf71:(kind==='pinkBell'?0xdb9ead:0x9fb9dc));
-    if(kind==='pinkBell'){
-      for(let k=-1;k<=1;k++){let b=new THREE.SphereGeometry(.075,5,4);b.scale(.8,1.2,.8);b.translate(k*.10,h-.02-Math.abs(k)*.05,0);p.push(geoCol(b,col));}
-    }else if(kind==='blueCup'){
-      let b=new THREE.ConeGeometry(.115,.16,6);b.rotateZ(Math.PI);b.translate(0,h+.04,0);p.push(geoCol(b,col));
-    }else{
-      const petals=kind==='yellowStar'?6:5;
-      for(let k=0;k<petals;k++){const a=k/petals*TAU;let b=new THREE.SphereGeometry(.055,5,3);b.scale(1.5,.45,.8);b.rotateY(-a);b.translate(Math.cos(a)*.075,h,Math.sin(a)*.075);p.push(geoCol(b,col));}
-      let c=new THREE.SphereGeometry(.045,5,4);c.translate(0,h+.012,0);p.push(geoCol(c,kind==='yellowStar'?0x8d6b32:0xd4ad55));
-    }
-  }
-  return mergeGeos(p);
-}
 function wildflowerGeo(){
   const p=[];
   let stem=new THREE.CylinderGeometry(.02,.03,0.55,4); stem.translate(0,.275,0);
@@ -89218,19 +88670,6 @@ function addBatchedBuildingFamilies(families,center,radius,rec,mat){
     const key='settleBuilding:'+f.region+':'+f.kind+':'+f.variant;
     const g=G(key,function(){return settlementHouseVariantGeo(f.kind,f.variant,f.region);});src.push(g);totalVertices+=g.attributes.position.count;
   }
-  /* WebKit/iOS: BatchedMesh benutzt zusätzliche Matrix-/Color-/Indirect-
-     Texturen. Das ist auf Desktop sehr effizient, aber einige eingebettete
-     iOS-WebViews reagieren beim ersten Draw empfindlich darauf. Mobile nutzt
-     deshalb dieselben Familien als normale InstancedMeshes: gleiche Welt und
-     Geometrie, nur ein konservativerer GPU-Pfad. */
-  if(IS_MOBILE){
-    let first=null;
-    for(let fi=0;fi<active.length;fi++){
-      const f=active[fi],m=addInstanced(src[fi],f.mats,f.cols,center,radius,rec,mat||cityMat);
-      if(m){m.userData.settlementBand='detail';m.userData.settlementRole='buildings';if(!first)first=m;}
-    }
-    return first;
-  }
   const batch=new THREE.BatchedMesh(totalInstances,Math.max(totalVertices,3),Math.max(totalVertices*2,6),mat||cityMat);
   batch.perObjectFrustumCulled=true;batch.sortObjects=false;let si=0;
   for(let fi=0;fi<active.length;fi++){
@@ -89247,14 +88686,6 @@ function addBatchedGeometryGroups(groups,center,radius,rec,mat,band,role){
   const active=groups.filter(function(g){return g&&g.mats&&g.mats.length;});if(!active.length)return null;
   let totalInstances=0,totalVertices=0;const src=[];
   for(const q of active){const g=G(q.key,q.geo);src.push(g);totalInstances+=q.mats.length;totalVertices+=g.attributes.position.count;}
-  if(IS_MOBILE){
-    let first=null;
-    for(let qi=0;qi<active.length;qi++){
-      const q=active[qi],m=addInstanced(src[qi],q.mats,q.cols,center,radius,rec,mat||cityMat);
-      if(m){m.userData.settlementBand=band||'detail';if(role)m.userData.settlementRole=role;if(!first)first=m;}
-    }
-    return first;
-  }
   const batch=new THREE.BatchedMesh(totalInstances,Math.max(3,totalVertices),Math.max(6,totalVertices*2),mat||cityMat);batch.perObjectFrustumCulled=true;batch.sortObjects=false;
   for(let qi=0;qi<active.length;qi++){const q=active[qi],g=src[qi].clone(),gid=batch.addGeometry(g);g.dispose();for(let i=0;i<q.mats.length;i++){const iid=batch.addInstance(gid);batch.setMatrixAt(iid,q.mats[i]);if(q.cols[i])batch.setColorAt(iid,q.cols[i]);}}
   batch.position.copy(center);batch.receiveShadow=true;batch.userData.settlementBand=band||'detail';if(role)batch.userData.settlementRole=role;
@@ -90456,8 +89887,6 @@ function pickPlantType(is,biome,h,sl,mask,coast,r){
 function plantTint(type,is,rnd){
   const dry=(is.dry-.5)*.10, c=new THREE.Color();
   if(type==='dead')return c.setHSL(.09,.14,.62+rnd()*.12);
-  if(type==='story')return c.setHSL(.265+rnd()*.022,.25+rnd()*.09,.60+rnd()*.12-dry*.45);
-  if(type==='orchard')return c.setHSL(.235+rnd()*.025,.19+rnd()*.09,.67+rnd()*.11-dry*.55);
   if(type==='silver'||type==='olive'||type==='windolive')return c.setHSL(.20+rnd()*.025,.12+rnd()*.08,.72+rnd()*.12-dry);
   if(type==='drygrass')return c.setHSL(.13+rnd()*.025,.32+rnd()*.12,.75+rnd()*.10);
   if(type==='cactus')return c.setHSL(.24+rnd()*.025,.22+rnd()*.10,.67+rnd()*.10);
@@ -90466,7 +89895,7 @@ function plantTint(type,is,rnd){
   if(type==='palm'||type==='ground'||type==='beachgrass')return c.setHSL(.27+rnd()*.04,.28+rnd()*.12,.70+rnd()*.12-dry);
   return c.setHSL(.25+rnd()*.045,.24+rnd()*.13,.67+rnd()*.14-dry);
 }
-const TREE_PLANTS=new Set(['pine','tall','alpine','cyp','olive','windolive','palm','dead','story','orchard']);
+const TREE_PLANTS=new Set(['pine','tall','alpine','cyp','olive','windolive','palm','dead']);
 const LOW_PLANTS=new Set(['bush','coast','oleander','silver','drygrass','beachgrass','fern','cactus','ground']);
 const PASS_PLANTS=new Set(['silver','drygrass','beachgrass','fern','ground']);
 function groveEdgePlant(biome,rnd){
@@ -90579,31 +90008,6 @@ function farTreeSilhouetteGeo(type,v){
   }
   return treeVariantTransform(mergeGeos(p),type,v,.6);
 }
-function storyTreeGeo(){
-  const p=[];let n=new THREE.CylinderGeometry(.42,.68,5.8,7);n.translate(0,2.9,0);p.push(geoCol(n,0x66513c));
-  // Runde, leicht asymmetrische Kronenmassen statt konischer "Game Trees".
-  const crown=[[0,6.0,0,2.7,1.8,2.5],[-2.0,5.6,.4,2.2,1.5,2.0],[1.9,5.8,-.5,2.35,1.55,2.15],[.5,7.3,.35,2.15,1.35,2.0]];
-  for(let i=0;i<crown.length;i++){const q=crown[i];n=new THREE.IcosahedronGeometry(1,i===0?1:0);n.scale(q[3],q[4],q[5]);n.translate(q[0],q[1],q[2]);p.push(geoCol(n,i&1?0x6f9158:0x62834f));}
-  return mergeGeos(p);
-}
-function forestCanopyMassGeo(){
-  const p=[];const pts=[[0,0,0,2.8,1.35,2.5],[-2.7,-.25,.7,2.3,1.15,2.0],[2.6,-.15,-.6,2.45,1.20,2.2],[-.5,.35,-2.3,2.2,1.12,2.0],[1.2,.42,2.2,2.1,1.08,1.9]];
-  for(let i=0;i<pts.length;i++){const q=pts[i],g=new THREE.IcosahedronGeometry(1,0);g.scale(q[3],q[4],q[5]);g.translate(q[0],2.8+q[1],q[2]);p.push(geoCol(g,i&1?0x496949:0x557650));}
-  return mergeGeos(p);
-}
-function storybookMistPatchGeo(t,is,zf){
-  const N=8,pos=[],uv=[],idx=[],ca=Math.cos(zf.a||0),sa=Math.sin(zf.a||0),ir=Math.cos(is.rot||0),sr=Math.sin(is.rot||0);
-  for(let j=0;j<=N;j++)for(let i=0;i<=N;i++){
-    const fx=i/N*2-1,fz=j/N*2-1;
-    // Ellipsenraum -> normalisierte Inselkoordinate -> echte lokale Weltkoordinate.
-    const eu=fx*zf.rx,ev=fz*zf.rz,u=zf.u+eu*ca-ev*sa,v=zf.v+eu*sa+ev*ca;
-    const nx=u*is.r*(is.ax||1),nz=v*is.r*(is.az||1),lx=nx*ir-nz*sr,lz=nx*sr+nz*ir;
-    const h=gridH(t,lx,lz)+1.1+(.5-.5*(fx*fx+fz*fz));
-    pos.push(lx,h,lz);uv.push(i/N,j/N);
-  }
-  for(let j=0;j<N;j++)for(let i=0;i<N;i++){const a=j*(N+1)+i,b=a+1,c=a+N+1,d=c+1;idx.push(a,c,b,b,c,d);}
-  const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(pos,3));g.setAttribute('uv',new THREE.Float32BufferAttribute(uv,2));g.setIndex(idx);g.computeVertexNormals();return g;
-}
 function midGroundcoverGeo(){
   const p=[];for(let i=0;i<5;i++){
     const a=i/5*TAU,r=i?(.35+(i%2)*.22):0;let g=new THREE.IcosahedronGeometry(1,0);
@@ -90614,7 +90018,7 @@ function midGroundcoverGeo(){
 function buildGreen(t,rec){
   const is=t.is, rnd=rngFor(is,3), dummy=new THREE.Object3D();
   const spanR=t.spanR, biome=islandBiome(is), mats={}, cols={};
-  const types=['pine','tall','alpine','cyp','olive','windolive','palm','dead','story','orchard','bush','coast',
+  const types=['pine','tall','alpine','cyp','olive','windolive','palm','dead','bush','coast',
                'oleander','silver','drygrass','beachgrass','fern','cactus','ground'];
   types.forEach(function(k){mats[k]=[];cols[k]=[];});
   // Ein kleines Ortsraster erzwingt nur fuer Kronen Mindestabstand. Die
@@ -90632,25 +90036,22 @@ function buildGreen(t,rec){
   }
   const density=biome===BIOME_DRY||biome===BIOME_VOLCANIC?.62:(biome===BIOME_WET?1.16:1);
   const want=Math.round(clamp(spanR*spanR/9400,28,460)*density);
-  const gc=[],L=is.landscape;
-  /* Hainzentren kommen primaer aus dem Landscape Blueprint. Randomness
-     variiert nur ihre Auspraegung, nicht mehr die gesamte Komposition. */
-  if(L){
-    const planned=L.forestZones.concat(L.groveZones);
-    for(let k=0;k<planned.length;k++){
-      const z=planned[k],q=storyZoneLocalPoint(is,z),h=gridH(t,q.x,q.z);
-      if(h<7||h>is.h*.94)continue;
-      gc.push({x:q.x,z:q.z,rx:Math.max(34,z.rx*is.r*(is.ax||1)),rz:Math.max(24,z.rz*is.r*(is.az||1)),a:(is.rot||0)+(z.a||0),strength:z.strength||1,zone:z});
-    }
+  const groves=6+((rnd()*7)|0), gc=[];
+  for(let k=0;k<groves;k++){
+    let gx,gz,h,n=0;
+    do{
+      if(k<2&&is.stream){
+        const f=.36+k*.27,a=is.tp.streamA+is.streamTurn,rr=lerp(is.r*is.streamStart,is.r*.88,f);
+        const bank=(k?1:-1)*(34+rnd()*22),sway=islandStreamSway(is,f)+bank;
+        gx=Math.cos(a)*rr-Math.sin(a)*sway;gz=Math.sin(a)*rr+Math.cos(a)*sway;
+      }else if(k<2&&is.tp&&(biome===BIOME_WET||biome===BIOME_PINE)){
+        const q=terrainPlanPoint(is,is.tp.passX+(rnd()-.5)*.32,is.tp.side*(.22+rnd()*.35));
+        gx=q.x;gz=q.z;
+      }else{const a=rnd()*TAU,rr=Math.sqrt(rnd())*spanR*.84;gx=Math.cos(a)*rr;gz=Math.sin(a)*rr;}
+      h=gridH(t,gx,gz); n++;
+    }while((h<9||h>is.h*.9)&&n<20);
+    gc.push({x:gx,z:gz,rx:75+rnd()*165,rz:35+rnd()*95,a:is.rot+(rnd()-.5)*1.25});
   }
-  // Kein Random-Fallback mehr: jeder Hain stammt aus dem Blueprint. Falls
-  // eine extrem kleine/steile Insel alle geplanten Zentren verwirft, wird
-  // exakt eine deterministische Randzone aus der ersten Wiese abgeleitet.
-  if(!gc.length&&L&&L.meadowZones.length){
-    const z=L.meadowZones[0],q=storyZoneLocalPoint(is,z),h=gridH(t,q.x,q.z);
-    if(h>7)gc.push({x:q.x,z:q.z,rx:Math.max(30,z.rx*is.r*.36),rz:Math.max(22,z.rz*is.r*.32),a:is.rot+(z.a||0),strength:.34,zone:z});
-  }
-  if(!gc.length)return;
   let guard=0,count=0;
   while(count<want&&guard<want*14){
     guard++;
@@ -90663,32 +90064,14 @@ function buildGreen(t,rec){
     if(rwBlocked(is,x,z))continue;
     if(vegetationBlocked(rec,is,x,z))continue;
     const mask=terrainMaskLocal(is,x,z), beach=h<18||(mask&TM_COASTAL)!==0;
-    const lf=landscapeFieldsAt(is,x+is.cx,z+is.cz);
-    if(lf.path>.48&&rnd()<.88)continue;
-    /* Scenic Kämme bleiben als lesbare Wiesenlinie bewusst offen. Nur
-       einzelne Randbäume dürfen dort stehen; niedriger Bewuchs bleibt. */
-    if(lf.ridge>.48&&rnd()<lf.ridge*.58)continue;
-    const forestPlan=clamp(Math.max(lf.forest,lf.grove*.82),0,1);
+    const macroCover=fbm2((x+is.cx)*.00165+is.seed*.17,(z+is.cz)*.00165-is.seed*.11,3);
     /* Wald folgt jetzt stärker Topografie und Exposition: geschützte
        Tal-/Leehänge dichter, Grate und alpine Baumgrenze lichter. */
     const aspect=Math.atan2(z,x),lee=.5+.5*Math.cos(aspect-(is.tp.settleA+Math.PI));
     const exposed=(mask&(TM_RIDGE|TM_LOOKOUT|TM_BARRIER))!==0;
     const treeLine=(biome===BIOME_ALPINE||biome===BIOME_PINE)?Math.max(150,is.h*(.56+.08*lee)):is.h*.90;
-    if((biome===BIOME_WET||biome===BIOME_PINE)&&forestPlan<(.22+.10*(1-lee))&&rnd()<.72)continue;
+    if((biome===BIOME_WET||biome===BIOME_PINE)&&macroCover<(.40+.08*(1-lee))&&rnd()<.72)continue;
     let type=pickPlantType(is,biome,h,sl,mask,beach,rnd());
-    /* Blueprint-Semantik: Waldkern -> Kronenbaum, Terrassen -> Obst/Olive,
-       offene Sonnenwiese -> niedriger Randbewuchs. */
-    if(!beach&&sl<.36){
-      if(lf.terrace>.48&&(is.village||biome===BIOME_CULT))type=rnd()<.52?'orchard':'olive';
-      else if(lf.forest>.56&&lf.clear<.35&&biome!==BIOME_DRY&&biome!==BIOME_VOLCANIC)type=rnd()<.46?'story':(biome===BIOME_PINE?'pine':'tall');
-      else if(lf.meadow>.58&&lf.forest<.42&&TREE_PLANTS.has(type)&&rnd()<.72)type=groveEdgePlant(biome,rnd());
-      if(lf.clear>.52&&TREE_PLANTS.has(type)&&rnd()<.88)type=groveEdgePlant(biome,rnd());
-      // Kuestengradient: hoher Baum -> windige Kleinform -> Busch/Kraut -> Ufer.
-      if(lf.shoreGlow>.28&&TREE_PLANTS.has(type))type=rnd()<.58?'silver':'coast';
-      else if(lf.coastTransition>.34&&TREE_PLANTS.has(type)&&type!=='palm')type=rnd()<.52?'windolive':'coast';
-      else if(lf.coastEdge>.35&&TREE_PLANTS.has(type)&&type!=='windolive'&&type!=='palm'&&rnd()<.62)type=groveEdgePlant(biome,rnd());
-      if(lf.ridge>.42&&TREE_PLANTS.has(type)&&rnd()<.76)type=groveEdgePlant(biome,rnd());
-    }
     if(TREE_PLANTS.has(type)&&h>treeLine)type=groveEdgePlant(biome,rnd());
     if(TREE_PLANTS.has(type)&&exposed&&rnd()<.48)type=groveEdgePlant(biome,rnd());
     if((mask&TM_PASS)&&!PASS_PLANTS.has(type))continue;
@@ -90710,13 +90093,12 @@ function buildGreen(t,rec){
     if(TREE_PLANTS.has(type)&&!reserveTree(x,z))type=groveEdgePlant(biome,rnd());
     count++;
     dummy.position.set(x,h-.6,z);
-    const low=LOW_PLANTS.has(type),tree=TREE_PLANTS.has(type),yaw=rnd()*TAU;
-    const windTilt=tree?lf.wind*(type==='cyp'?.035:.075):0;
-    const wd=(L&&L.windDirection)||is.tp.axis;
-    dummy.rotation.set(Math.sin(wd)*windTilt,yaw,-Math.cos(wd)*windTilt);
-    const age=tree?(rnd()<.17?.68:(rnd()>.80?1.22:1)):1;
-    const zoneScale=tree?(forestZone===0?1.10:(forestZone===2?.84:1)):1;
-    const base=low?.62:(type==='cyp'?.78:(type==='story'?.88:(type==='orchard'?.74:.82))), sc=(base+rnd()*(low?.52:.62))*age*zoneScale;
+    dummy.rotation.set(0,rnd()*TAU,0);
+    const low=LOW_PLANTS.has(type);
+    const age=TREE_PLANTS.has(type)?(rnd()<.17?.68:(rnd()>.80?1.22:1)):1;
+    const zoneScale=TREE_PLANTS.has(type)?(forestZone===0?1.10:(forestZone===2?.84:1)):1;
+    const base=low?.62:(type==='cyp'?.78:.82), sc=(base+rnd()*(low?.52:.62))*age*zoneScale;
+    dummy.rotation.z=(type==='coast'||type==='windolive'||type==='alpine')?is.tp.side*.10:0;
     dummy.scale.set(sc*(.88+rnd()*.24),sc*(.86+rnd()*.38),sc*(.88+rnd()*.24));
     dummy.updateMatrix();
     mats[type].push(dummy.matrix.clone()); cols[type].push(plantTint(type,is,rnd));
@@ -90734,8 +90116,8 @@ function buildGreen(t,rec){
       mats[type].push(dummy.matrix.clone());cols[type].push(plantTint(type,is,rnd));
     }
   }
-  if(is.big&&biome!==BIOME_VOLCANIC&&biome!==BIOME_ATOLL&&is.landscape&&is.landscape.heroTree){
-    const hp=is.landscape.heroPoints[0],q=hp?storyZoneLocalPoint(is,{u:hp.u,v:hp.v,rx:.1,rz:.1,a:0}):terrainPlanPoint(is,is.tp.plateauX,is.tp.plateauZ), h=gridH(t,q.x,q.z);
+  if(is.big&&biome!==BIOME_VOLCANIC&&biome!==BIOME_ATOLL){
+    const q=terrainPlanPoint(is,is.tp.plateauX,is.tp.plateauZ), h=gridH(t,q.x,q.z);
     if(h>9&&gridS(t,q.x,q.z)<.42&&!rwBlocked(is,q.x,q.z,70)&&!vegetationBlocked(rec,is,q.x,q.z)){
       if(biome===BIOME_ALPINE||biome===BIOME_PINE||biome===BIOME_DRY){
         // Unveraendert: fuer Hochgebirge/Nadelwald/Trockenheit passt die
@@ -90769,7 +90151,7 @@ function buildGreen(t,rec){
   const ctr0=new THREE.Vector3(is.cx,0,is.cz), rad0=spanR*1.4+90;
   const clusteredPines=biome===BIOME_WET||biome===BIOME_PINE;
   const geos={pine:clusteredPines?groveClusterGeo:pineGeo,tall:tallPineGeo,alpine:alpinePineGeo,cyp:cypressGeo,olive:oliveGeo,
-    windolive:windOliveGeo,palm:palmGeo,dead:deadTreeGeo,story:storyTreeGeo,orchard:orchardTreeGeo,bush:bushGeo,coast:coastalBushGeo,
+    windolive:windOliveGeo,palm:palmGeo,dead:deadTreeGeo,bush:bushGeo,coast:coastalBushGeo,
     oleander:oleanderGeo,silver:silverHerbGeo,drygrass:dryGrassGeo,beachgrass:beachGrassGeo,
     fern:fernGeo,cactus:cactusGeo,ground:groundcoverGeo};
 
@@ -90789,34 +90171,6 @@ function buildGreen(t,rec){
   }
   const mg=addInstanced(G('midGroundcover',midGroundcoverGeo),mgm,mgc,ctr0,rad0,rec,vegMat);
   if(mg){mg.userData.vegType='ground';mg.userData.vegLOD='midground';mg.castShadow=false;mg.receiveShadow=false;mg.visible=false;}
-
-  /* Mid/Far-Wald wird als wenige Kronenmassen gelesen, nicht als hunderte
-     einzelne Baum-Silhouetten. Einzelbaeume bleiben trotzdem fuer Near/Mid. */
-  if(L&&(L.forestZones.length||L.groveZones.length)){
-    const cm=[],cc=[],canopyZones=L.forestZones.concat(L.groveZones);
-    for(let zi=0;zi<canopyZones.length;zi++){
-      const zf=canopyZones[zi],q=storyZoneLocalPoint(is,zf),isGrove=zf.kind==='grove';
-      for(let j=0;j<(isGrove?(is.big?2:1):(is.big?6:3));j++){
-        const a=(j/(is.big?6:3))*TAU+storyHash(is,320+zi*23+j)*.65;
-        const rr=.18+.58*storyHash(is,330+zi*23+j),lx=q.x+Math.cos(a)*zf.rx*is.r*rr,lz=q.z+Math.sin(a)*zf.rz*is.r*rr;
-        const h=gridH(t,lx,lz);if(h<8||gridS(t,lx,lz)>.40||rwBlocked(is,lx,lz,25))continue;
-        dummy.position.set(lx,h-.2,lz);dummy.rotation.set(0,storyHash(is,340+zi*23+j)*TAU,0);
-        const sc=.78+storyHash(is,350+zi*23+j)*.72;dummy.scale.set(sc*(1.0+zf.rx),sc*(.82+zf.strength*.18),sc*(.95+zf.rz));dummy.updateMatrix();
-        cm.push(dummy.matrix.clone());cc.push(new THREE.Color().setHSL(.265+storyHash(is,360+zi*23+j)*.025,.22+.08*storyHash(is,370+zi*23+j),.50+.11*storyHash(is,380+zi*23+j)));
-      }
-    }
-    const canopy=addInstanced(G('storyCanopyMass',forestCanopyMassGeo),cm,cc,ctr0,rad0,rec,vegMat);
-    if(canopy){canopy.userData.vegType='story';canopy.userData.vegLOD='canopyFar';canopy.castShadow=false;canopy.receiveShadow=false;canopy.visible=false;}
-  }
-  /* Feuchte Story-Hollows bekommen höchstens eine geländefolgende Nebelhaut.
-     Sie sitzt in derselben Blueprint-Zone wie Farbton/Farne/Schilf und ist
-     deshalb kein zufälliger Effekt über trockenen Hügeln. */
-  if(L&&L.wetZones.length&&(L.primaryBiome===STORY_MIST||is.stream||biome===BIOME_WET)){
-    const zf=L.wetZones[0],g=storybookMistPatchGeo(t,is,zf),mist=new THREE.Mesh(g,storybookMistMat);
-    mist.position.set(is.cx,0,is.cz);mist.castShadow=false;mist.receiveShadow=false;mist.renderOrder=1;
-    mist.userData.vegType='mist';mist.userData.vegLOD='mist';mist.visible=false;
-    scene.add(mist);rec.meshes.push(mist);rec.geos.push(g);
-  }
 
   types.forEach(function(type){
     const isTree=TREE_PLANTS.has(type);
@@ -90838,14 +90192,8 @@ function buildGreen(t,rec){
       if(near){near.userData.vegType=type;near.userData.vegLOD='near';}
       const mid=addInstanced(G('veg_mid_'+type+'_v'+v,()=>midTreeSilhouetteGeo(type,v)),vm[v],vc[v],ctr0,rad0,rec,type==='dead'?propMat:vegMat);
       if(mid){mid.userData.vegType=type;mid.userData.vegLOD='mid';mid.receiveShadow=false;mid.castShadow=false;mid.visible=false;}
-      /* Far: keine zufaelligen Einzelstifte mehr. Wald liest dort ueber
-         storyCanopyMass, Hero-Baeume/Landmarks besitzen eigene Silhouetten. */
-      const farAccent=false;
-      if(farAccent){
-        const fm=[],fc=[];for(let fi=0;fi<vm[v].length;fi++)if((fi&3)===0){fm.push(vm[v][fi]);fc.push(vc[v][fi]);}
-        const far=addInstanced(G('veg_far_'+type+'_v'+v,()=>farTreeSilhouetteGeo(type,v)),fm,fc,ctr0,rad0,rec,type==='dead'?propMat:vegMat);
-        if(far){far.userData.vegType=type;far.userData.vegLOD='far';far.userData.vegFarAccent=true;far.receiveShadow=false;far.castShadow=false;far.visible=false;}
-      }
+      const far=addInstanced(G('veg_far_'+type+'_v'+v,()=>farTreeSilhouetteGeo(type,v)),vm[v],vc[v],ctr0,rad0,rec,type==='dead'?propMat:vegMat);
+      if(far){far.userData.vegType=type;far.userData.vegLOD='far';far.receiveShadow=false;far.castShadow=false;far.visible=false;}
     }
   });
 }
@@ -90926,19 +90274,13 @@ function buildSystemNaturalLandmarks(t,rec){
      Für die Inselsilhouette sind bodennähere Landmarken glaubwürdiger, darum
      bleibt der System-Naturpass bei Felsgruppen, alten Kiefern und Geröllmulden. */
   const rnd=rngFor(is,67),dummy=new THREE.Object3D(),kinds=['guardianBoulder','ancientPine','screeBowl'];
-  /* Hero-Landschaft statt Landmark-Streuung: Inseln mit gebautem Hauptmerkmal
-     bekommen keinen zusaetzlichen grossen Naturprop. Sonst hoechstens EIN
-     ruhiger Naturakzent auf knapp einem Drittel der grossen Inseln. */
-  const builtHero=!!(is.landmarkKind||is.lighthouse||is.fort||is.ruin||is.mill||is.arch||is.falls);
-  const n=builtHero?0:(ihash(is.ci,is.cj,12091)>.68?1:0),used=new Set();
+  const n=1+((ihash(is.ci,is.cj,12091)*3)|0),used=new Set();
   for(let li=0;li<n;li++){
     let kind=kinds[((ihash(is.ci,is.cj,12113+li*17)*kinds.length)|0)];
     for(let spin=0;spin<kinds.length&&used.has(kind);spin++)kind=kinds[(kinds.indexOf(kind)+1)%kinds.length];
     used.add(kind);let best=null,bs=-1e9;
-    const hero=is.landscape&&is.landscape.heroPoints&&is.landscape.heroPoints[0];
-    const hq=hero?storyZoneLocalPoint(is,{u:hero.u,v:hero.v,rx:.1,rz:.1,a:0}):null;
     for(let q=0;q<34;q++){
-      const a=rnd()*TAU,rr=t.spanR*(.12+rnd()*.28),x=(hq?hq.x:0)+Math.cos(a)*rr,z=(hq?hq.z:0)+Math.sin(a)*rr,h=gridH(t,x,z),sl=gridS(t,x,z),tm=terrainMaskLocal(is,x,z);
+      const a=rnd()*TAU,rr=t.spanR*(.30+rnd()*.52),x=Math.cos(a)*rr,z=Math.sin(a)*rr,h=gridH(t,x,z),sl=gridS(t,x,z),tm=terrainMaskLocal(is,x,z);
       if(h<22||h>is.h*.88||rwBlocked(is,x,z,95)||(tm&(TM_RUNWAY|TM_SETTLEMENT|TM_PASS)))continue;
       let sc=0;
       if(kind==='guardianBoulder')sc=h*.13+(1-Math.abs(sl-.24))*28+(tm&TM_LOOKOUT?26:0)+(tm&TM_HIGHLAND?12:0);
@@ -92696,15 +92038,6 @@ function buildHomeHarbor(is,t,parts,rec,rnd){
 const live=new Map();
 const tasks=[];
 const pending=new Set();
-/* Read-only diagnostics for smoke tests and mobile console reports. */
-window.__SW_DIAG__={
-  get live(){return live.size;},get tasks(){return tasks.length;},get sceneObjects(){return scene.children.length;},
-  get calls(){return renderer.info.render.calls;},get geometries(){return renderer.info.memory.geometries;},get textures(){return renderer.info.memory.textures;},
-  get buildReady(){return typeof built!=='undefined'&&built;},get buildStage(){return typeof stageI!=='undefined'?stageI:-1;},
-  get plane(){return pl&&pl.pos?{x:pl.pos.x,y:pl.pos.y,z:pl.pos.z}:null;},
-  landscapeSummary:function(){const t={},shapes={};let n=0,wet=0,paths=0,flowers=0,groves=0;for(const r of live.values()){if(r.is&&r.is.landscape){n++;const L=r.is.landscape,k=L.primaryBiome,sk=L.shapeIntent&&L.shapeIntent.type;t[k]=(t[k]||0)+1;if(sk)shapes[sk]=(shapes[sk]||0)+1;wet+=L.wetZones.length;paths+=L.pathZones.length;flowers+=L.flowerZones.length;groves+=L.groveZones.length;}}return {count:n,types:t,shapes:shapes,wetZones:wet,pathSegments:paths,flowerZones:flowers,groveZones:groves};},
-  finiteTransforms:function(){let bad=0;scene.traverse(function(o){if(o.position&&!Number.isFinite(o.position.x+o.position.y+o.position.z))bad++;if(o.scale&&!Number.isFinite(o.scale.x+o.scale.y+o.scale.z))bad++;});return bad;}
-};
 
 /* ============================================================
    AAA WORLD PASS · TERRAIN DISTANCE LOD · COMPLETE
@@ -92873,7 +92206,7 @@ function stepTask(){
       const j1=Math.min(j+1,t.N), j0=Math.max(j-1,0);
       const dx=(t.hs[j*W1+i1]-t.hs[j*W1+i0])/((i1-i0)*t.stepW);
       const dz=(t.hs[j1*W1+i]-t.hs[j0*W1+i])/((j1-j0)*t.stepW);
-      landColor(pos.getX(k)+is.cx,pos.getZ(k)+is.cz,t.hs[k],Math.sqrt(dx*dx+dz*dz),is.dry,tmpC,is,dx,dz);
+      landColor(pos.getX(k)+is.cx,pos.getZ(k)+is.cz,t.hs[k],Math.sqrt(dx*dx+dz*dz),is.dry,tmpC,is);
       t.col[k*3]=tmpC.r;t.col[k*3+1]=tmpC.g;t.col[k*3+2]=tmpC.b;
     }
     t.row=end;
@@ -92905,7 +92238,7 @@ function stepTask(){
     for(let j=t.row;j<end;j++)for(let i=0;i<M;i++){
       const k=j*M+i,i1=Math.min(i+1,t.midN),i0=Math.max(i-1,0),j1=Math.min(j+1,t.midN),j0=Math.max(j-1,0);
       const dx=(t.midH[j*M+i1]-t.midH[j*M+i0])/((i1-i0)*t.midStep),dz=(t.midH[j1*M+i]-t.midH[j0*M+i])/((j1-j0)*t.midStep);
-      landColor(mp.getX(k)+is.cx,mp.getZ(k)+is.cz,t.midH[k],Math.sqrt(dx*dx+dz*dz),is.dry,tmpC,is,dx,dz);
+      landColor(mp.getX(k)+is.cx,mp.getZ(k)+is.cz,t.midH[k],Math.sqrt(dx*dx+dz*dz),is.dry,tmpC,is);
       t.midC[k*3]=tmpC.r;t.midC[k*3+1]=tmpC.g;t.midC[k*3+2]=tmpC.b;
     }
     t.row=end;if(t.row>=M)t.phase=33;return true;
@@ -92933,7 +92266,7 @@ function stepTask(){
     for(let j=t.row;j<end;j++)for(let i=0;i<F;i++){
       const k=j*F+i,i1=Math.min(i+1,t.farN),i0=Math.max(i-1,0),j1=Math.min(j+1,t.farN),j0=Math.max(j-1,0);
       const dx=(t.farH[j*F+i1]-t.farH[j*F+i0])/((i1-i0)*t.farStep),dz=(t.farH[j1*F+i]-t.farH[j0*F+i])/((j1-j0)*t.farStep);
-      landColor(fp.getX(k)+is.cx,fp.getZ(k)+is.cz,t.farH[k],Math.sqrt(dx*dx+dz*dz),is.dry,tmpC,is,dx,dz);
+      landColor(fp.getX(k)+is.cx,fp.getZ(k)+is.cz,t.farH[k],Math.sqrt(dx*dx+dz*dz),is.dry,tmpC,is);
       t.farC[k*3]=tmpC.r;t.farC[k*3+1]=tmpC.g;t.farC[k*3+2]=tmpC.b;
     }
     t.row=end;if(t.row>=F)t.phase=36;return true;
@@ -92997,7 +92330,7 @@ function stepTask(){
         const dx=(t.bgH[j*M1+i1]-t.bgH[j*M1+i0])/((i1-i0)*t.bgStep);
         const dz=(t.bgH[j1*M1+i]-t.bgH[j0*M1+i])/((j1-j0)*t.bgStep);
         landColor(bp.getX(k)+t.bay.c.x,bp.getZ(k)+t.bay.c.z,t.bgH[k],
-                  Math.sqrt(dx*dx+dz*dz),is.dry,tmpC,is,dx,dz);
+                  Math.sqrt(dx*dx+dz*dz),is.dry,tmpC,is);
         t.bgC[k*3]=tmpC.r; t.bgC[k*3+1]=tmpC.g; t.bgC[k*3+2]=tmpC.b;
       }
       t.row=M1+end; return true;
@@ -93174,8 +92507,6 @@ function updateLandscapeWorld(dt,px,py,pz){
       else if(lod==='mid')m.visible=d2>nearR*nearR&&d2<=midR*midR&&py<2050;
       else if(lod==='far')m.visible=d2>midR*midR&&!farTrees&&py<2400;
       else if(lod==='midground')m.visible=d2>(mobile?550:700)**2&&d2<(mobile?3500:4700)**2&&py<1300;
-      else if(lod==='canopyFar')m.visible=d2>(mobile?1500:1900)**2&&d2<(mobile?7600:9000)**2&&py<2500;
-      else if(lod==='mist')m.visible=d2<(mobile?2600:3600)**2&&py<1350&&rainAmt<.72;
       else m.visible=LOW_PLANTS.has(type)?!lowOff:!farTrees;
     }
     if(!ST.running||!pl.alive||landscapeDiscoveryCd>0||!rec.landmarks)continue;
@@ -95227,11 +94558,6 @@ function buildRain(){
 function updateRain(dt,t){
   if(!rainMesh)return;
   rainAmt+=(rainTgt-rainAmt)*Math.min(1,dt*.10);
-  if(rainAmt>.18)afterRainMemory=clamp(afterRainMemory+dt*.018*rainAmt,0,1);
-  else afterRainMemory=Math.max(0,afterRainMemory-dt/300);
-  const postTarget=rainAmt<.09?afterRainMemory:0;
-  afterRainAmt+=(postTarget-afterRainAmt)*Math.min(1,dt*(postTarget>afterRainAmt?.05:.025));
-  storyAfterRainU.value=afterRainAmt;
   // Nässe sammelt sich merklich langsamer als der Regen einsetzt und
   // trocknet danach über mehrere Minuten aus statt sofort wieder da/weg
   // zu sein — genau das "sammelt sich" in der Anfrage.
@@ -104320,7 +103646,6 @@ function cycleCam(){
 }
 let everStarted=false;
 function beginFlight(){
-  try{
   if(!everStarted){
     everStarted=true;
     const hi=ensureHome();
@@ -104359,15 +103684,6 @@ function beginFlight(){
   el('veil').classList.add('gone');
   initAudio();
   resumeAudio();
-  }catch(e){
-    swRuntimeError('beginFlight',e);
-    const box=el('err');
-    box.innerHTML='<div>Der Flug konnte nicht gestartet werden.<br><small style="display:block;margin-top:8px;opacity:.75">'+escapeHTML(swLastRuntimeError.slice(0,900))+'</small><br><button type="button" id="errReload">Seite neu laden</button></div>';
-    box.style.display='grid';
-    const retry=el('errReload');if(retry)retry.addEventListener('click',function(){location.reload();});
-    return false;
-  }
-  return true;
 }
 /* Neigungssteuerung ist eine Option, keine Wahl beim Start — Standard bleibt der Daumen. */
 function setTiltMode(on){
@@ -107581,11 +106897,10 @@ function applyCustomGfx(saved,fromLoad){
   PR_MAX=PR;
   RENDER_SCALE=isFinite(+saved.scale)?clamp(+saved.scale,.8,1):fallback.scale;
   RENDER_SCALE_BASE=RENDER_SCALE;
-  postOn=SW_IOS_SAFE_RENDER?false:(typeof saved.post==='boolean'?saved.post:fallback.post);
+  postOn=typeof saved.post==='boolean'?saved.post:fallback.post;
   postAutoOff=false;
-  ssrOn=SW_IOS_SAFE_RENDER?false:(typeof saved.ssr==='boolean'?saved.ssr:fallback.ssr);
-  cascadesOn=SW_IOS_SAFE_RENDER?false:(typeof saved.cascades==='boolean'?saved.cascades:fallback.cascades);
-  if(SW_IOS_SAFE_RENDER){PR=1;PR_MAX=1;RENDER_SCALE=.8;RENDER_SCALE_BASE=.8;}
+  ssrOn=typeof saved.ssr==='boolean'?saved.ssr:fallback.ssr;
+  cascadesOn=typeof saved.cascades==='boolean'?saved.cascades:fallback.cascades;
   ssrHavePrev=false;
   renderer.setPixelRatio(PR); resize();
   SAVE.gfx=currentGfxSave('custom',false);
@@ -107610,11 +106925,8 @@ function refreshGfxUI(){
 function applyGfxPreset(name,fromLoad){
   const P=GFX_PRESETS[name]; if(!P)return;
   const pr=gfxDevicePR(P.pr);
-  gfxAuto=SW_IOS_SAFE_RENDER?false:P.auto;
-  PR=SW_IOS_SAFE_RENDER?1:pr;PR_MAX=PR;
-  RENDER_SCALE=SW_IOS_SAFE_RENDER?.8:P.scale;RENDER_SCALE_BASE=RENDER_SCALE;
-  postOn=SW_IOS_SAFE_RENDER?false:P.post;postAutoOff=false;
-  ssrOn=SW_IOS_SAFE_RENDER?false:P.ssr;cascadesOn=SW_IOS_SAFE_RENDER?false:P.cascades;ssrHavePrev=false;
+  gfxAuto=P.auto; PR=pr; PR_MAX=pr; RENDER_SCALE=P.scale; RENDER_SCALE_BASE=P.scale;
+  postOn=P.post; postAutoOff=false; ssrOn=P.ssr; cascadesOn=P.cascades; ssrHavePrev=false;
   renderer.setPixelRatio(PR); resize();
   SAVE.gfx=currentGfxSave(name,P.auto);
   nearVegRevision++;
@@ -107650,9 +106962,6 @@ function makeSceneRT(w,h){
 const _whiteTex=new THREE.DataTexture(new Uint8Array([255,255,255,255]),1,1);
 _whiteTex.needsUpdate=true;
 function buildPost(){
-  if(SW_IOS_SAFE_RENDER){
-    disposePost();postOK=false;ssaoOK=false;ssrOn=false;postOn=false;return;
-  }
   try{
     disposePost();
     const pw=Math.max(2,Math.floor(window.innerWidth*PR*RENDER_SCALE)),
@@ -109489,14 +108798,8 @@ stages.push(()=>{hmFinish();buildOcean();
   if(oceanMat)oceanMat.uniforms.uHC.value.copy(hmCenter);});
 let primeN=0;
 stages.push(function prime(){
-  /* Mobile muss vor dem Titelbild nicht den kompletten 12.5-km-Streamingring
-     fertigbauen. Das Start-/Heimatrevier reicht; der normale Streamer lädt den
-     Rest danach inkrementell weiter. Das verhindert minutenlange Ladephasen auf
-     iOS, ohne die Welt oder ihre LODs zu verändern. */
-  updateStream(START.x,START.z,IS_MOBILE?12:26);
+  updateStream(START.x,START.z,26);
   primeN++;
-  const essentialReady=homeIs?live.has(homeIs.key):(live.size>0);
-  if(IS_MOBILE)return (!essentialReady&&primeN<4)?'again':undefined;
   let open=false;
   forEachIslandNear(START.x,START.z,STREAM_R,function(is){
     if(live.has(is.key))return;
@@ -109504,30 +108807,17 @@ stages.push(function prime(){
   });
   return (open&&primeN<300)?'again':undefined;
 });
-function swOptionalBuild(name,fn){
-  try{fn();return true;}catch(e){
-    window.__SW_OPTIONAL_BUILD_ERRORS__=window.__SW_OPTIONAL_BUILD_ERRORS__||[];
-    window.__SW_OPTIONAL_BUILD_ERRORS__.push(name+': '+((e&&e.stack)||String(e)));
-    return false;
-  }
-}
-stages.push(()=>{swOptionalBuild('clouds',buildClouds);});
-stages.push(()=>{
-  const optional=[['birds',buildBirds],['particles',buildParticles],['wake',buildWake],['boats',buildBoats],['civilAI',buildAI],
-    ['seaLife',buildSeaLife],['folk',buildFolk],['foes',buildFoes],['raiders',buildRaiders],['ships',buildNpcShips],['rain',buildRain],
-    ['homeSmoke',buildHomeSmoke],['villageSmoke',buildVillageSmoke],['bayLights',buildBayLights],['harborSignals',buildHarborSignals],
-    ['meteorGlow',buildMeteorGlow],['festivalDecor',buildFestivalDecor],['grass',buildGrass],['flowers',buildFlowers],['meadowMotes',buildMeadowMotes]];
-  for(const pair of optional)swOptionalBuild(pair[0],pair[1]);
-});
+stages.push(()=>buildClouds());
+stages.push(()=>{buildBirds();buildParticles();buildWake();buildBoats();buildAI();buildSeaLife();buildFolk();buildFoes();buildRaiders();buildNpcShips();buildRain();buildHomeSmoke();buildVillageSmoke();buildBayLights();buildHarborSignals();buildMeteorGlow();buildFestivalDecor();buildGrass();buildFlowers();});
 stages.push(()=>{buildPlane();
   const hi=ensureHome();
   if(!(hi&&hi.hb&&placeInBay(hi))){
     if(startIs&&startIs.rw)placeOnRunway(startIs); else resetPlane(START.x,START.z);
   }
-  if(SAVE.story.stage>=5&&!wreckObj)swOptionalBuild('wreck',spawnWreck);
-  if(SAVE.story.stage>=10&&SAVE.story.stage<12&&!tailObj)swOptionalBuild('tailWreck',spawnTailWreck);
-  if(SAVE.story.stage<12)swOptionalBuild('storyKeepsake',spawnStoryKeepsake);
-  if(SAVE.story.stage>=12)swOptionalBuild('storyMemorial',spawnStoryMemorial);
+  if(SAVE.story.stage>=5&&!wreckObj)spawnWreck();
+  if(SAVE.story.stage>=10&&SAVE.story.stage<12&&!tailObj)spawnTailWreck();
+  if(SAVE.story.stage<12)spawnStoryKeepsake();
+  if(SAVE.story.stage>=12)spawnStoryMemorial();
   });
 /* Letzte Ladestufe: alle Shader schon hinter der Ladeleiste übersetzen und
    Schatten/Kaskaden einmal "kalt" durchrechnen. Sonst passiert genau das
@@ -109540,97 +108830,26 @@ stages.push(()=>{buildPlane();
    auf die eigentlich gewollte Qualität ist der kleine "Sprung" kurz nach
    dem Start. Wird hier vorgewärmt, bleibt die FPS-Kurve von Anfang an ruhig
    und die Regelung hat nichts mehr zu korrigieren. */
-let warmStarted=false,warmDone=false,warmWatchdog=0;
-function finishWarmCompile(reason){
-  if(warmDone)return;
-  warmDone=true;
-  if(warmWatchdog){clearTimeout(warmWatchdog);warmWatchdog=0;}
-  if(reason&&reason!=='ok')window.__SW_WARMUP_FALLBACK__=reason;
-}
+let warmStarted=false,warmDone=false;
 stages.push(function warmCompile(){
-  if(warmDone)return;
   if(!warmStarted){
     warmStarted=true;
-    /* iOS/WebKit und eingebettete Vorschau-WebViews sind genau die Umgebung,
-       in der KHR_parallel_shader_compile/compileAsync je nach Treiber werfen,
-       haengen oder einen anonymisierten `Script error` ausloesen kann. Die
-       Vorwaermung ist nur eine Komfortoptimierung; renderAll() hat waehrend
-       der Ladephase ohnehin bereits echte Frames gezeichnet. Mobile darf
-       deshalb niemals vom asynchronen Compiler abhaengen. */
-    const appleWebKit=/AppleWebKit/i.test(navigator.userAgent||'')&&!/Chrome|Chromium|CriOS|EdgA|EdgiOS|OPiOS/i.test(navigator.userAgent||'');
-    if(IS_MOBILE||appleWebKit){
-      finishWarmCompile('mobile/webkit: async shader warmup skipped');
-      return;
-    }
-    let p=null;
-    try{
-      p=renderer.compileAsync?renderer.compileAsync(scene,camera):null;
-    }catch(e){
-      window.__SW_WARMUP_ERROR__=(e&&e.stack)||String(e);
-      finishWarmCompile('compileAsync threw synchronously');
-      return;
-    }
-    // Auch ein nie aufloesender Browser-/Treiber-Promise darf den Start nicht blockieren.
-    warmWatchdog=setTimeout(function(){finishWarmCompile('compileAsync timeout');},3500);
-    Promise.resolve(p).catch(function(e){
-      window.__SW_WARMUP_ERROR__=(e&&e.stack)||String(e);
-    }).then(function(){
-      if(warmDone)return;
+    const p=(renderer.compileAsync)?renderer.compileAsync(scene,camera):Promise.resolve();
+    p.catch(()=>{}).then(()=>{
       try{
         updateSunShadow();
-        renderer.setRenderTarget(null);renderer.render(scene,camera);
-        updateCascades();renderCascades();
-      }catch(e){
-        window.__SW_WARMUP_RENDER_ERROR__=(e&&e.stack)||String(e);
-      }
-      finishWarmCompile('ok');
+        renderer.setRenderTarget(null); renderer.render(scene,camera);
+        updateCascades(); renderCascades();
+      }catch(e){}
+      warmDone=true;
     });
   }
   return warmDone?undefined:'again';
 });
 let stageI=0,built=false,builtAt=0;
-let swRuntimeErrorCount=0,swLastRuntimeError='';
-function swRuntimeError(where,e){
-  swRuntimeErrorCount++;
-  const msg=(e&&e.stack)||String(e||'Unbekannter Fehler');
-  swLastRuntimeError=where+': '+msg;
-  window.__SW_LAST_ERROR__=swLastRuntimeError;
-  window.__SW_RUNTIME_ERRORS__=window.__SW_RUNTIME_ERRORS__||[];
-  window.__SW_RUNTIME_ERRORS__.push(swLastRuntimeError);
-  if(window.__SW_RUNTIME_ERRORS__.length>16)window.__SW_RUNTIME_ERRORS__.shift();
-}
-let swRenderFallback=false,swRenderFaults=0;
-function safeRenderAll(){
-  try{renderAll();swRenderFaults=0;return true;}
-  catch(e){
-    swRenderFaults++;
-    swRuntimeError('render-pass',e);
-    if(!swRenderFallback){
-      swRenderFallback=true;
-      try{postOn=false;ssrOn=false;cascadesOn=false;csmU.uCscOn.value=0;}catch(_e){}
-      try{renderer.setRenderTarget(null);renderer.render(scene,camera);return true;}catch(e2){swRuntimeError('render-fallback',e2);}
-    }
-    return false;
-  }
-}
 function buildStep(){
   if(stageI<stages.length){
-    let r;
-    try{r=stages[stageI]();}
-    catch(e){
-      swRuntimeError('load-stage '+stageI+' '+(stages[stageI].name||'anonymous'),e);
-      /* Nur die optionale letzte Warmup-Stufe darf bei einem Fehler einfach
-         uebersprungen werden. Bei echten Aufbaufehlern bleibt die Ladephase
-         stehen, aber nun mit lokalem Stack statt anonymem Script error. */
-      if(stageI===stages.length-1){finishWarmCompile('load-stage exception');r=undefined;}
-      else{
-        const box=el('err');
-        box.innerHTML='<div>Sommerwind konnte die Welt nicht vollstaendig aufbauen.<br><small style="display:block;margin-top:8px;opacity:.75">'+escapeHTML(swLastRuntimeError.slice(0,700))+'</small><br><button type="button" id="errReload">Seite neu laden</button></div>';
-        box.style.display='grid';
-        const retry=el('errReload');if(retry)retry.addEventListener('click',function(){location.reload();});
-        return false;
-      }
-    }
+    const r=stages[stageI]();
     if(r!=='again')stageI++;
     el('barFill').style.width=
       Math.min(99,(stageI+(r==='again'?Math.min(.9,primeN/70):0))/stages.length*100)+'%';
@@ -109667,7 +108886,8 @@ window.addEventListener('resize',resize);
 window.addEventListener('orientationchange',()=>setTimeout(resize,250));
 
 let last=performance.now(),acc=0,fpsAcc=0,fpsN=0,T=0,warmupWindows=0,badStreak=0;
-function loopFrame(now){
+function loop(now){
+  requestAnimationFrame(loop);
   // Ein versteckter Tab soll weder Weltzeit noch GPU-Zeit verbrauchen. Beim
   // Zurückkehren wird last sofort neu gesetzt, damit kein einziger Nachholframe
   // Wetter, Flugphysik oder Animationen springen lässt.
@@ -109676,7 +108896,7 @@ function loopFrame(now){
   if(!(dt>0))dt=.016;
   dt=Math.min(dt,.06);
 
-  if(!buildStep()){safeRenderAll();return;}
+  if(!buildStep()){renderAll();return;}
 
   // Bildrate im Blick behalten — paßt sich in beide Richtungen an: sackt sie
   // ein, wird zuerst der Lichtschein abgeschaltet, dann die Schärfe gesenkt;
@@ -109882,7 +109102,6 @@ function loopFrame(now){
   const planeAgl=pl.pos.y-Math.max(planeGroundH,0);
   updateGrass(dt,T,pl.pos.x,pl.pos.z,planeAgl);
   updateFlowers(dt,pl.pos.x,pl.pos.z,planeAgl);
-  updateMeadowMotes(T,pl.pos.x,pl.pos.z,planeAgl);
   updateMissionDebrief(dt);
   if(++hudTick%5===0&&ST.running)updateHUD();
   if(coinShow>0)coinShow-=dt;
@@ -109897,31 +109116,8 @@ function loopFrame(now){
   updateOnboarding(dt);
   updateDevOverlay(now);
 
-  safeRenderAll();
+  renderAll();
 }
-function loop(now){
-  requestAnimationFrame(loop);
-  try{loopFrame(now);}
-  catch(e){
-    swRuntimeError('frame',e);
-    /* Ein einzelnes optionales Update darf die RAF-Kette auf iOS niemals
-       beenden. Nach dem ersten Framefehler werden die komplexesten rein
-       visuellen Pfade abgeschaltet; Physik, Streaming, HUD und Haupt-Renderer
-       laufen im nächsten Frame weiter. */
-    if(!swRenderFallback){
-      swRenderFallback=true;
-      try{postOn=false;ssrOn=false;cascadesOn=false;if(csmU&&csmU.uCscOn)csmU.uCscOn.value=0;}catch(_e){}
-    }
-    if(!built&&stageI>=stages.length-3){
-      /* Falls ein rein visueller Initial-Frame auf einem sehr strengen WebView
-         scheitert, Ladeoverlay dennoch freigeben. Die Welt streamt danach
-         normal weiter und safeRenderAll nutzt den einfachen Hauptpass. */
-      built=true;
-      try{el('load').classList.add('gone');setTimeout(function(){el('loadLayer').style.display='none';},250);}catch(_e){}
-    }
-  }
-}
-
 /* Debug-Werkzeuge bleiben eine kleine Kapsel: kein Einfluss auf Saves oder
    Eingabe, solange die Ansicht nicht ausdrücklich mit F8 geöffnet wird. */
 const DEV={open:false,last:0,course:null};
@@ -110019,7 +109215,7 @@ enhanceAccessibility();
 try{new MutationObserver(function(records){
   for(const r of records)for(const n of r.addedNodes)if(n.nodeType===1)enhanceAccessibility(n);
 }).observe(document.body,{childList:true,subtree:true});}catch(e){}
-window.__DBG={SAVE:SAVE,ST:ST,pl:pl,live:live,hemi:hemi,amb:amb,sunLight:sunLight,scene:scene,renderer:renderer,camera:camera,renderAll:renderAll,
+window.__DBG={SAVE:SAVE,ST:ST,pl:pl,live:live,hemi:hemi,amb:amb,sunLight:sunLight,scene:scene,
   audioState:function(){return {context:AU?AU.state:'none',voices:audioVoices.length,peak:audioPeakVoices,limit:AUDIO_VOICE_LIMIT,
     mix:Object.assign({},audioMix),buses:!!(busVehicle&&busWorld&&busSfx&&busUI&&busDialog&&busMusic&&busCombat),limiter:!!masterLimiter};},
   dialogueState:function(){return {prefs:Object.assign({},dialogPrefs),modal:!!storyDlg,modalQueue:modalDialogQueue.length,
@@ -110054,7 +109250,6 @@ window.__DBG={SAVE:SAVE,ST:ST,pl:pl,live:live,hemi:hemi,amb:amb,sunLight:sunLigh
   setDay:function(v){dayT=v;applyTime();},
   clearWeather:function(){rainAmt=0;rainTgt=0;fogAmt=0;fogTgt=0;applyTime();},
   setRain:function(v){rainAmt=rainTgt=clamp(+v||0,0,1);applyTime();},
-  storybookWeather:function(){return {rain:rainAmt,wet:wetAmt,afterRain:afterRainAmt,memory:afterRainMemory,time:timeName,grade:storyGradeU.value};},
   setHangar:function(v){SAVE.hangar=v;const hi=ensureHome();
     const rec=live.get(hi.key);if(rec){dropIsland(rec);live.delete(hi.key);}
     for(let k=0;k<12;k++)updateStream(pl.pos.x,pl.pos.z,40);},
@@ -110124,9 +109319,10 @@ window.__DBG={SAVE:SAVE,ST:ST,pl:pl,live:live,hemi:hemi,amb:amb,sunLight:sunLigh
   storyAdvance:storyAdvance,
   openTalk:openTalk,
   grassInfo:function(){
-    if(!grassMeshes)return null;let placed=0,families={};
-    for(let i=0;i<GRASS_N;i++)if(grassSlots[i].valid){placed++;families[grassSlots[i].family]=(families[grassSlots[i].family]||0)+1;}
-    return {visible:grassOn,placed:placed,total:GRASS_N,on:grassOn,families:families};
+    if(!grassMesh)return null;
+    let placed=0;
+    for(let i=0;i<GRASS_N;i++) if(grassSlots[i].valid)placed++;
+    return {visible:grassMesh.visible, placed:placed, total:GRASS_N, on:grassOn};
   },
   folkInfo:function(){
     const roles={},sample=[];let active=0,cartActive=0;
@@ -110217,17 +109413,13 @@ window.__DBG={SAVE:SAVE,ST:ST,pl:pl,live:live,hemi:hemi,amb:amb,sunLight:sunLigh
   gfx:{presets:GFX_PRESETS,apply:applyGfxPreset,state:function(){return {preset:SAVE.gfx&&SAVE.gfx.preset,auto:gfxAuto,post:postOn,ssr:ssrOn,cascades:cascadesOn,pr:PR,scale:RENDER_SCALE};}},
   SKINS:SKINS
 };
-window.__SW_BOOT_STAGE__='render-init';
-try{resize();}catch(e){swRuntimeError('resize-init',e);postOn=false;ssrOn=false;}
-if(!SW_IOS_SAFE_RENDER){try{buildCascades();}catch(e){swRuntimeError('cascade-init',e);cascadesOn=false;try{csmU.uCscOn.value=0;}catch(_e){}}}
-else{cascadesOn=false;try{csmU.uCscOn.value=0;}catch(_e){}}
-window.__SW_BOOT_STAGE__='loop';
+resize();
+buildCascades();
 requestAnimationFrame(loop);
 // Reicht nur das Nötigste für die mobile Bottom-Nav (separates <script>
 // unten) nach außen — showPane()/tapBtn()/el() bleiben ansonsten exakt
 // die internen Funktionen, an die auch die Desktop-Tabs gebunden sind.
 window.__sw={showPane:showPane,tapBtn:tapBtn,el:el};
-window.__SW_BOOT_STAGE__='ready';
 }
 </script>
 <script id="mobileNavModule">
