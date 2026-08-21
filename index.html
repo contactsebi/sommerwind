@@ -91503,9 +91503,9 @@ const pending=new Set();
    - Near: Landung/Tiefflug
    - Mid: lesbare Fels-/Waldform
    - Far: Horizontsilhouette
-   Jede Stufe besitzt einen echten Perimeter-Skirt. Die Übergänge werden
-   komplementär gedithert; kein FPS-Wächter kann eine Stufe dauerhaft
-   abschalten. Mobile ändert nur Distanzen/Budgets, nie die Makrogeologie.
+   Jede Stufe besitzt einen echten Perimeter-Skirt. Die Übergänge schalten
+   mit Hysterese um; das frühere Screen-Dither erzeugte in der Ferne ein
+   sichtbares Punkt-/Netzraster. Mobile ändert nur Distanzen/Budgets, nie die Makrogeologie.
    ============================================================ */
 function terrainGridN(is,spanR){
   const p=(SAVE&&SAVE.gfx&&SAVE.gfx.preset)||'ultra';
@@ -91601,16 +91601,29 @@ function updateTerrainWorldLOD(px,py,pz){
     if(!rec.terrainLevels)continue;
     const L=rec.terrainLevels,is=rec.is,span=rec.terrainSpan||is.r;
     const d=Math.hypot(is.cx-px,is.cz-pz),n=terrainLODNearStart(is,span),f=terrainLODFarStart(is,span),b=terrainLODBlend(is,span);
-    const n0=n-b*.5,n1=n+b*.5,f0=f-b*.62,f1=f+b*.62;
-    if(d<n0){terrainSetLevelFull(L.near,true);terrainSetLevelFull(L.mid,false);terrainSetLevelFull(L.far,false);}
-    else if(d<n1){
-      const t=clamp((d-n0)/(n1-n0),0,1),cut=1-t;
-      terrainSetLevelDither(L.near,1,cut);terrainSetLevelDither(L.mid,-1,cut);terrainSetLevelFull(L.far,false);
-    }else if(d<f0){terrainSetLevelFull(L.near,false);terrainSetLevelFull(L.mid,true);terrainSetLevelFull(L.far,false);}
-    else if(d<f1){
-      const t=clamp((d-f0)/(f1-f0),0,1),cut=1-t;
-      terrainSetLevelFull(L.near,false);terrainSetLevelDither(L.mid,1,cut);terrainSetLevelDither(L.far,-1,cut);
-    }else{terrainSetLevelFull(L.near,false);terrainSetLevelFull(L.mid,false);terrainSetLevelFull(L.far,true);}
+
+    /* FIX: Die bisherige Near/Mid/Far-Überblendung hat Fragmente in einem
+       festen 4x4-Screen-Dither verworfen. Auf weit entfernten Inseln wird
+       dieses Muster sichtbar als regelmäßiges "Netz"/Punktgitter und wandert
+       beim Fliegen über die Silhouette. Stattdessen schalten wir die LODs
+       vollständig um und benutzen eine breite Hysterese gegen Hin-und-her-
+       Springen an der Distanzgrenze. So bleibt die Ferne geschlossen und
+       stabil, ohne Z-Fighting oder sichtbares Raster. */
+    let level=rec.terrainLodLevel;
+    if(level!==0&&level!==1&&level!==2)level=d<n?0:(d<f?1:2);
+    const h=b*.62;
+    if(level===0){
+      if(d>n+h)level=1;
+    }else if(level===1){
+      if(d<n-h)level=0;
+      else if(d>f+h)level=2;
+    }else if(d<f-h){
+      level=1;
+    }
+    rec.terrainLodLevel=level;
+    terrainSetLevelFull(L.near,level===0);
+    terrainSetLevelFull(L.mid, level===1);
+    terrainSetLevelFull(L.far, level===2);
   }
 }
 
