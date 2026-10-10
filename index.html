@@ -86294,11 +86294,13 @@ function applyTime(){
   hemi.groundColor.lerpColors(a._hg,b._hg,k);
   hemi.intensity=lerp(a.hi,b.hi,k);
   amb.intensity=lerp(a.amb,b.amb,k);
-  /* WORLD TARGET final art-direction: scene lighting only. Sky/water colors and all shaders remain untouched. */
+  /* Tageslicht: gerichtetes Sonnenlicht behalten, den überhöhten Fülllicht-
+     Sockel reduzieren. Zweifaches Himmels-/Umgebungslicht wusch auch
+     beschattete Materialien aus; nachts bleiben die abgestimmten Werte. */
   const artDayLight=smoothstep(-.04,.30,sunDir.y);
   sunLight.intensity*=lerp(1.0,1.78,artDayLight);
-  hemi.intensity*=lerp(1.0,2.25,artDayLight);
-  amb.intensity*=lerp(1.0,2.15,artDayLight);
+  hemi.intensity*=lerp(1.0,1.45,artDayLight);
+  amb.intensity*=lerp(1.0,1.25,artDayLight);
   C.zen.lerpColors(a._zen,b._zen,k);   C.mid.lerpColors(a._mid,b._mid,k);
   C.hor.lerpColors(a._hor,b._hor,k);   C.sun.lerpColors(a._sun,b._sun,k);
   C.fog.lerpColors(a._fog,b._fog,k);   C.deep.lerpColors(a._deep,b._deep,k);
@@ -114130,7 +114132,9 @@ const P5_GLSL=`
   float p5InstFade(){
     #ifdef USE_INSTANCING
       vec3 iw=(modelMatrix*instanceMatrix*vec4(0.0,0.0,0.0,1.0)).xyz;
-      return 1.0-smoothstep(uP5Lod.x-uP5Lod.y,uP5Lod.x,distance(iw,cameraPosition));
+      // Je Baum eine feste Wechselentfernung: keine Löcher in den Kronen.
+      float key=fract(sin(dot(iw.xz,vec2(.1031,.11369)))*43758.5453);
+      return 1.0-step(mix(uP5Lod.x-uP5Lod.y,uP5Lod.x,key),distance(iw,cameraPosition));
     #else
       return 1.0;
     #endif
@@ -114248,7 +114252,7 @@ function p5CrownAttr(g,opt){
         vP5WP=(modelMatrix*vec4(transformed,1.0)).xyz;
       #endif`);
     fs=fs.replace('#include <common>','#include <common>\nuniform float uP5,uP5Frame;\nvarying float vP5AO;\nvarying vec3 vP5WP;\nvarying float vP5Fade;\n  float p5Dither(float t){return fract(52.9829189*fract(dot(gl_FragCoord.xy,vec2(.06711056,.00583715))+t*.7548));}')
-      .replace('#include <map_fragment>','if(vP5Fade<.999&&p5Dither(uP5Frame)>vP5Fade)discard;\n#include <map_fragment>')
+      .replace('#include <map_fragment>','if(vP5Fade<.5)discard;\n#include <map_fragment>')
       .replace('#include <normal_fragment_begin>','#include <normal_fragment_begin>\n      if(uP5>.5){normal*=faceDirection;nonPerturbedNormal=normal;}')
       .replace('#include <lights_fragment_end>',`#include <lights_fragment_end>
       if(uP5>.5){
@@ -114295,7 +114299,7 @@ function p5CrownAttr(g,opt){
       }
       `+a);
     fs=fs.replace('#include <common>','#include <common>\nuniform float uP5,uP5Frame;\nvarying float vP5Y;\nvarying float vP5Fade;\n  float p5Dither(float t){return fract(52.9829189*fract(dot(gl_FragCoord.xy,vec2(.06711056,.00583715))+t*.7548));}')
-      .replace('#include <color_fragment>','if(vP5Fade<.999&&p5Dither(uP5Frame)>vP5Fade)discard;\n#include <color_fragment>')
+      .replace('#include <color_fragment>','if(vP5Fade<.5)discard;\n#include <color_fragment>')
       .replace('#include <color_fragment>',`#include <color_fragment>
       /* Phase 5 · Stammfuß: Erde, Moos, Verdeckung */
       diffuseColor.rgb*=mix(vec3(1.0),mix(.50,1.0,smoothstep(.0,1.7,vP5Y))*mix(vec3(.86,.92,.82),vec3(1.0),smoothstep(.2,1.2,vP5Y)),uP5);`);
@@ -114658,7 +114662,8 @@ function p5ImpMaterial(S){
             vec3 p5iw=(modelMatrix*vec4(0.0,0.0,0.0,1.0)).xyz;
           #endif
           float p5dc=distance(p5iw,cameraPosition);
-          vImpFade=uImpKind>.5?smoothstep(uP5Lod.z,uP5Lod.z+uP5Lod.w,p5dc):smoothstep(uP5Lod.x-uP5Lod.y,uP5Lod.x,p5dc);
+          float p5key=fract(sin(dot(p5iw.xz,vec2(.1031,.11369)))*43758.5453);
+          vImpFade=uImpKind>.5?step(mix(uP5Lod.z,uP5Lod.z+uP5Lod.w,p5key),p5dc):step(mix(uP5Lod.x-uP5Lod.y,uP5Lod.x,p5key),p5dc);
           if(vImpFade<=0.001)transformed=vec3(0.0);
         }`)
       .replace('#include <project_vertex>',`#include <project_vertex>
@@ -114670,21 +114675,28 @@ function p5ImpMaterial(S){
     shader.fragmentShader=shader.fragmentShader
       .replace('#include <common>','#include <common>\nuniform sampler2D tImpA,tImpN;\nuniform vec4 uImpRect,uImpC;\nuniform float uImpN,uP5Frame,uP5,uImpKind,uImpFpx,uImpMaxLod;\nvarying float vImpFade;\nuniform vec3 uPaintSunDir,uPaintSunCol;\nuniform mat4 projectionMatrix;\nvarying vec2 vImpUv;\nvarying vec2 vImpG;\nvarying vec3 vImpR0;\nvarying vec3 vImpR1;\nvarying vec3 vImpR2;\nvarying vec3 vImpWP;\nvarying float vImpS;\n'+P5_IMP_GLSL)
       .replace('#include <map_fragment>',`
-        /* Phase 5 · Impostor: zwei Nachbarrichtungen stochastisch gemischt (TAA glättet) */
-        float p5h1=fract(52.9829189*fract(dot(gl_FragCoord.xy,vec2(.06711056,.00583715))+uP5Frame*.7548));
-        if(vImpFade<.999&&(uImpKind>.5?p5h1>vImpFade:p5h1<1.0-vImpFade))discard;
-        float p5h2=fract(52.9829189*fract(dot(gl_FragCoord.xy+vec2(17.0,9.0),vec2(.06711056,.00583715))+uP5Frame*.5698));
+        /* Stetige Blickrichtungs-Mischung, auch ohne TAA. Die bisherige
+           zufällige Auswahl + Alpha-Maske machte ganze Kronen löchrig. */
+        if(vImpFade<.5)discard;
         vec2 p5gi=floor(vImpG),p5gf=vImpG-p5gi;
-        vec2 p5fr=clamp(p5gi+vec2(step(p5h1,p5gf.x),step(p5h2,p5gf.y)),0.0,uImpN-1.0);
-        vec2 p5uv=uImpRect.xy+(p5fr+clamp(vImpUv,.004,.996))*uImpRect.zw/uImpN;
-        /* Mip-Stufe aus der stetigen Quad-Koordinate, gedeckelt: ein Bild im
-           Atlas bleibt mindestens ~12 Texel groß, sonst verschmiert die Deckung
-           über die ganze Kachel und das Quad wird als Punktraster sichtbar */
         vec2 p5fp=vImpUv*uImpFpx;
         float p5lv=clamp(log2(max(max(length(dFdx(p5fp)),length(dFdy(p5fp))),1e-3)),0.0,uImpMaxLod);
-        vec4 p5A=textureLod(tImpA,p5uv,p5lv);
-        vec4 p5Nd=textureLod(tImpN,p5uv,p5lv);
-        if(min(1.0,p5A.a*1.45)<mix(.10,.55,fract(p5h1*7.13+p5h2*3.71)))discard;
+        // Halber Mip-Texel Abstand hält die Filterung innerhalb einer Ansicht.
+        float p5pad=.5*exp2(ceil(p5lv))/uImpFpx;
+        vec2 p5local=clamp(vImpUv,vec2(p5pad),vec2(1.0-p5pad));
+        vec4 p5A=vec4(0.0),p5Nd=vec4(0.0);
+        for(int p5i=0;p5i<4;p5i++){
+          vec2 corner=vec2(float(p5i%2),float(p5i/2));
+          vec2 weight=mix(vec2(1.0)-p5gf,p5gf,corner);
+          float w=weight.x*weight.y;
+          vec2 frame=clamp(p5gi+corner,vec2(0.0),vec2(uImpN-1.0));
+          vec2 texUV=uImpRect.xy+(frame+p5local)*uImpRect.zw/uImpN;
+          vec4 a=textureLod(tImpA,texUV,p5lv);
+          p5A+=vec4(a.rgb*a.a,a.a)*w;
+          p5Nd+=textureLod(tImpN,texUV,p5lv)*(a.a*w);
+        }
+        if(p5A.a<.30)discard;
+        p5Nd/=p5A.a;p5A.rgb/=p5A.a;
         diffuseColor.rgb*=p5A.rgb*1.10;
         vec3 p5nl=p5OctDec(p5Nd.xy*2.0-1.0);
         vec3 p5nw=normalize(vImpR0*p5nl.x+vImpR1*p5nl.y+vImpR2*p5nl.z);
@@ -115096,6 +115108,18 @@ function p5MgBuild(){
   }catch(e){P5M.err=(e&&e.message)||String(e);P5M.kinds=[];}
 }
 const _p5mm=new THREE.Matrix4(),_p5mq=new THREE.Quaternion(),_p5ms=new THREE.Vector3(),_p5mp=new THREE.Vector3(),_p5mc=new THREE.Color(),_p5mZ=new THREE.Matrix4().makeScale(0,0,0).setPosition(0,-9999,0);
+const _p5GroundNormal=new THREE.Vector3(),_p5GroundYaw=new THREE.Quaternion();
+function p5AlignField(x,z,heading,out){
+  // Ein Feld ist fast zehn Meter breit. Nur die Höhe seiner Mitte zu
+  // übernehmen ließ die Reihen an Hängen schweben bzw. im Boden versinken.
+  const d=P5M.step*.5;
+  const dx=(heightAt(x+d,z)-heightAt(x-d,z))/(2*d);
+  const dz=(heightAt(x,z+d)-heightAt(x,z-d))/(2*d);
+  _p5GroundNormal.set(-dx,1,-dz).normalize();
+  out.setFromUnitVectors(_gUP,_p5GroundNormal);
+  _p5GroundYaw.setFromAxisAngle(_gUP,heading);
+  return out.multiply(_p5GroundYaw);
+}
 function p5MgKind(x,z,gx,gz){
   const h=heightAt(x,z),is=hOwner;
   if(!is||h<5.5||h>Math.min(640,is.h*.82))return null;
@@ -115139,7 +115163,8 @@ function p5MgUpdate(px,pz,agl){
     const idx=K.free.pop();sl.k=q.k;sl.idx=idx;
     const r1=p5Hash(gx,gz,7),r2=p5Hash(gx,gz,8);
     const sc=q.k===0?(1.25+r1*.90):(q.k===1?(1.30+r1*.85):1.0);
-    _p5mq.setFromAxisAngle(_gUP,q.k===2?q.rot:r2*TAU);
+    if(q.k===2)p5AlignField(x,z,q.rot,_p5mq);
+    else _p5mq.setFromAxisAngle(_gUP,r2*TAU);
     _p5ms.set(sc,q.k===2?(.92+r2*.16):sc*(q.k===1?(.85+r2*.45):(.9+r2*.3)),sc);
     _p5mp.set(x,q.h-.08,z);_p5mm.compose(_p5mp,_p5mq,_p5ms);
     K.mesh.setMatrixAt(idx,_p5mm);
@@ -115209,7 +115234,7 @@ function checkHDRTargets(){
 /* Stärke des Glanzscheins im Standard-Komposit. Er speist sich nur aus
    Werten oberhalb von ~1,05 (siehe mBright) — also aus Licht, das bisher
    hart abgeschnitten wurde, nie aus normal hellem Gras, Sand oder Putz. */
-const POST_GLOW=.14;
+const POST_GLOW=.08;
 let postFrame=0;
 const _postSize=new THREE.Vector2();
 /* Das frühere CSS-Overlay #grade (radiale Soft-Light-Tönung) liegt ab jetzt
@@ -115396,6 +115421,20 @@ const POST_DITHER_GLSL=`
     vec2 p=gl_FragCoord.xy+frame*vec2(5.588238,3.161);
     float n=postIGN(p)+postIGN(p+vec2(41.0,17.0))-1.0;
     return c+n*(1.0/255.0);
+  }`;
+/* Die historischen Paletten werden bereits ohne sRGB-Ausgabe geschrieben.
+   Deshalb keine zweite Gamma-Kurve: nur helle Spitzen weich komprimieren,
+   dabei das Verhältnis der Farbkanäle erhalten statt sie weiß abzuschneiden. */
+const POST_HIGHLIGHT_GLSL=`
+  vec3 postHighlights(vec3 c){
+    c=max(c,vec3(0.0));
+    float peak=max(c.r,max(c.g,c.b));
+    const float knee=.72;
+    if(peak>knee){
+      float shoulder=knee+(1.0-knee)*(1.0-exp(-(peak-knee)/(1.0-knee)));
+      c*=shoulder/peak;
+    }
+    return c;
   }`;
 /* Exakt das frühere CSS-Overlay #grade: radial-gradient(120% 88% at 50% 44%,
    rgba(255,236,196,.06) 0%, rgba(255,214,150,0) 55%, rgba(28,44,64,.10) 100%)
@@ -115584,10 +115623,11 @@ function buildPost(){
           uniform vec2 uTexel; varying vec2 vUv;
           ${POST_DITHER_GLSL}
           ${POST_GRADE_GLSL}
-          vec3 ldr(vec2 uv){return clamp(texture2D(tS,uv).rgb,0.0,1.0);}
+          ${POST_HIGHLIGHT_GLSL}
+          vec3 ldr(vec2 uv){return postHighlights(texture2D(tS,uv).rgb);}
           void main(){
             vec3 hdr=texture2D(tS,vUv).rgb;
-            vec3 c=clamp(hdr,0.0,1.0);
+            vec3 c=postHighlights(hdr);
             if(uSharp>0.001){
               // dieselbe kontrastadaptive Schärfung wie im Filmlook, aber auf
               // geklemmten Werten: HDR-Spitzen erzeugen so keine dunklen Säume
@@ -115600,11 +115640,8 @@ function buildPost(){
               float amt=uSharp*clamp(1.0-(lMax-lMin)*2.2,0.0,1.0);
               c=clamp(c+(c*4.0-(nA+nB+nC+nD))*amt*0.22,0.0,1.0);
             }
-            // Was bisher hart abgeschnitten wurde, läuft jetzt sanft ins Weiße
-            // aus (farbige Sonnenglitzer werden nicht mehr gelbstichig gekappt).
-            float pk=max(hdr.r,max(hdr.g,hdr.b));
-            c=mix(c,vec3(1.0),clamp((pk-1.0)*0.25,0.0,0.4));
-            if(uGlow>0.0001)c+=texture2D(tB,vUv).rgb*uGlow;
+            // Glanz nutzt nur die verbleibende Helligkeitsreserve.
+            if(uGlow>0.0001)c+=postHighlights(texture2D(tB,vUv).rgb)*uGlow*(vec3(1.0)-c);
             c=clamp(c,0.0,1.0);
             if(uGrade>0.5)c=cssGrade(c,vUv);
             gl_FragColor=vec4(clamp(postDither(c,uFrame),0.0,1.0),1.0);
@@ -115819,18 +115856,18 @@ function buildPost(){
             gl_FragColor=vec4(vec3(ao),1.0);
           }`});
       mComp=new THREE.ShaderMaterial({
-        uniforms:{tS:{value:null},tB:{value:null},tAO:{value:_whiteTex},uAO:{value:0},
+        uniforms:{tS:{value:null},tB:{value:null},tDepth:{value:null},tAO:{value:_whiteTex},uAO:{value:0},
           // War .38 — der Lichtschein läuft über ein Viertelauflösungs-Ziel mit
           // recht breitem Kern; zusammen mit dem (jetzt angehobenen) niedrigen
           // Schwellwert oben blutete heller Himmel spürbar über dunkle Ränder
           // wie ferne Inselsilhouetten und ließ sie insgesamt weichgezeichnet
           // wirken statt nur an echten Glanzlichtern zu leuchten.
-          uBloom:{value:.24},uSpeed:{value:0},
+          uBloom:{value:.14},uSpeed:{value:0},
           uSunUV:{value:new THREE.Vector2(.5,.5)},uSunVis:{value:0},
           uHaze:{value:0},uHazeCol:{value:new THREE.Color(0xffffff)},uHazeT:{value:0},
           uTexel:{value:new THREE.Vector2()},uSharp:{value:0},uFrame:{value:0},uGrade:{value:1}},
         vertexShader:VS_QUAD,
-        fragmentShader:`uniform sampler2D tS,tB,tAO; uniform float uAO;
+        fragmentShader:`uniform sampler2D tS,tB,tDepth,tAO; uniform float uAO;
           uniform float uFrame,uGrade;
           ${POST_DITHER_GLSL}
           ${POST_GRADE_GLSL}
@@ -115907,7 +115944,7 @@ function buildPost(){
             // (Regen/Nebel/Sandsturm, uHaze) werden die Strahlen kräftiger
             // und in treibende, ungleichmäßige Bänke aufgebrochen — echter
             // Dunst macht Streiflicht sichtbarer, keinen weniger.
-            if(uSunVis>0.01){
+            if(uSunVis>0.01&&texture2D(tDepth,vUv).r>=.99999){
               vec2 toSun=uSunUV-vUv;
               vec3 rays=vec3(0.0);
               for(int i=0;i<10;i++){
@@ -115923,25 +115960,14 @@ function buildPost(){
                           +hazeNoise(sp*7.5-vec2(uHazeT*0.026,uHazeT*0.014))*0.4;
                 float cloudBand=0.45+0.75*smoothstep(0.30,0.75,cloud);
                 float band=mix(cloudBand,0.55+0.55*hazeNoise(sp*26.0+vec2(uHazeT*0.10,uHazeT*0.06)),uHaze);
-                rays+=texture2D(tB,sp).rgb*band;
+                float skyMask=step(.99999,texture2D(tDepth,sp).r);
+                rays+=texture2D(tB,sp).rgb*band*skyMask;
               }
-              c+=(rays*0.1)*uSunVis*0.55*(1.0+uHaze*1.6);
+              c+=(rays*0.1)*uSunVis*0.18*(1.0+uHaze*.5);
             }
-            // Allgemeine Dunstbank quer übers Bild — atmet mit dem aktuellen
-            // Wetter statt nur die scene.fog-Distanz zu ändern, dichter zum
-            // Bildzentrum/Horizont hin, mit derselben treibenden Textur wie
-            // die Sonnenstrahlen oben.
-            if(uHaze>0.01){
-              float horizonBand=1.0-smoothstep(0.0,0.62,abs(vUv.y-0.46));
-              float drift=hazeNoise(vUv*7.0+vec2(uHazeT*0.06,uHazeT*0.04))*0.5
-                        +hazeNoise(vUv*15.0-vec2(uHazeT*0.09,uHazeT*0.03))*0.5;
-              c=mix(c,uHazeCol,clamp(uHaze*horizonBand*(0.20+0.22*drift),0.0,0.6));
-            }
-            // Belichtung anheben, dann filmisch (ACES) abrollen lassen,
-            // damit helle Flächen Zeichnung behalten statt auszubrennen —
-            // etwas kräftiger als zuvor, damit Sonnenglanz auf Wasser und
-            // Himmel wirklich "HDR" wirkt statt nur hell auszusehen.
-            c*=1.48;
+            // Entfernungsabhängiger Dunst steckt bereits in der Szene.
+            // Kein zweiter weißer Schleier über Flugzeug und Nahbereich;
+            // Filmlook komprimiert Highlights ohne zusätzlichen Belichtungsboost.
             c=acesFilm(c);
             float l=dot(c,vec3(0.299,0.587,0.114));
             // warmer, mediterraner 1920er-Sommergrad: goldene Lichter, ein
@@ -116170,6 +116196,7 @@ function renderFrame(){
   if(postOn){
     pQuad.material=mComp;
     mComp.uniforms.tS.value=hdrTex; mComp.uniforms.tB.value=rtA.texture;
+    mComp.uniforms.tDepth.value=sceneDepth;
     // unter TAA steckt die SSAO schon im Verlauf (siehe oben)
     mComp.uniforms.tAO.value=(!taa&&aoTex)?aoTex:_whiteTex; mComp.uniforms.uAO.value=(!taa&&aoTex)?1:0;
     mComp.uniforms.uTexel.value.set(1/hdrW,1/hdrH);
@@ -116186,7 +116213,8 @@ function renderFrame(){
     _sunPV.copy(camera.position).addScaledVector(sunDir,9000).project(camera);
     const sunBehind=_sunPV.z>1||_sunPV.z<-1;
     mComp.uniforms.uSunUV.value.set(_sunPV.x*.5+.5,_sunPV.y*.5+.5);
-    mComp.uniforms.uSunVis.value=sunBehind?0:clamp(sunDir.y*2.2+0.25,0,1);
+    const sunEdge=1-smoothstep(.88,1.08,Math.max(Math.abs(_sunPV.x),Math.abs(_sunPV.y)));
+    mComp.uniforms.uSunVis.value=sunBehind?0:clamp(sunDir.y*2.2+0.25,0,1)*sunEdge;
   }else{
     pQuad.material=mFinal;
     mFinal.uniforms.tS.value=hdrTex; mFinal.uniforms.tB.value=rtA.texture;
